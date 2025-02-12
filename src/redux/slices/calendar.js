@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 // utils
 import axios from '../../utils/axios';
 
-// ----------------------------------------------------------------------
-
 const initialState = {
   isLoading: false,
   error: null,

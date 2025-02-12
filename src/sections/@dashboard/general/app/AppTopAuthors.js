@@ -58,8 +58,7 @@ function AuthorItem({ author, index }) {
             color: 'text.secondary',
           }}
         >
-          <Iconify icon="eva:heart-fill" width={16} sx={{ mr: 0.5 }} />
-          {fShortenNumber(author.favourite)}
+          XP: {fShortenNumber(author.favourite)}
         </Typography>
       </Box>
 
@@ -70,15 +69,15 @@ function AuthorItem({ author, index }) {
           width: 40,
           height: 40,
           borderRadius: '50%',
-          color: 'primary.main',
-          bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
+          color: '#FFD700',
+          bgcolor: (theme) => alpha("#FFD700", 0.08),
           ...(index === 1 && {
-            color: 'info.main',
-            bgcolor: (theme) => alpha(theme.palette.info.main, 0.08),
+            color: '#C0C0C0',
+            bgcolor: (theme) => alpha("#C0C0C0", 0.08),
           }),
           ...(index === 2 && {
-            color: 'error.main',
-            bgcolor: (theme) => alpha(theme.palette.error.main, 0.08),
+            color: '#CD7F32',
+            bgcolor: (theme) => alpha("#CD7F32", 0.08),
           }),
         }}
       />

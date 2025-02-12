@@ -47,7 +47,7 @@ export default function GeneralAppPage() {
 
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
+          {/* <Grid item xs={12} md={8}>
             <AppWelcome
               title={`Welcome back! \n ${user?.displayName}`}
               description="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything."
@@ -62,15 +62,45 @@ export default function GeneralAppPage() {
               }
               action={<Button variant="contained">Go Now</Button>}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={4}>
+          {/* <Grid item xs={12} md={4}>
             <AppFeatured list={_appFeatured} />
+            </Grid> */}
+          <Grid item xs={12} md={4}>
+            <AppWidget
+              title="Active Users"
+              total={20000}
+              icon="line-md:account"
+              chart={{
+                series: 2,
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <AppWidget
+              title="Test Sessions"
+              total={2000}
+              icon="line-md:check-list-3-filled"
+              chart={{
+                series: 5,
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <AppWidget
+              title="IQ Sessions"
+              total={100}
+              icon="line-md:check-list-3-filled"
+              chart={{
+                series: 5,
+              }}
+            />
           </Grid>
 
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
-              title="Total Active Users"
+              title="Total Users"
               percent={2.6}
               total={18765}
               chart={{
@@ -82,8 +112,8 @@ export default function GeneralAppPage() {
 
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
-              title="Total Installed"
-              percent={0.2}
+              title="Total Questions"
+              percent={-2}
               total={4876}
               chart={{
                 colors: [theme.palette.info.main],
@@ -94,7 +124,7 @@ export default function GeneralAppPage() {
 
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
-              title="Total Downloads"
+              title="Total Bugs"
               percent={-0.1}
               total={678}
               chart={{
@@ -104,27 +134,30 @@ export default function GeneralAppPage() {
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={6}>
             <AppCurrentDownload
-              title="Current Download"
+              title="Orders"
               chart={{
                 colors: [
-                  theme.palette.primary.main,
                   theme.palette.info.main,
-                  theme.palette.error.main,
                   theme.palette.warning.main,
+                  theme.palette.primary.main,
+                  theme.palette.error.main,
                 ],
                 series: [
-                  { label: 'Mac', value: 12244 },
-                  { label: 'Window', value: 53345 },
-                  { label: 'iOS', value: 44313 },
-                  { label: 'Android', value: 78343 },
+                  { label: 'Pending', value: 12244 },
+                  { label: 'OnProcess', value: 53345 },
+                  { label: 'Delivered', value: 44313 },
+                  { label: 'Cancel', value: 78343 },
                 ],
               }}
             />
           </Grid>
+          <Grid item xs={12} md={6} lg={6}>
+            <AppTopAuthors title="Top Authors" list={_appAuthors} />
+          </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppAreaInstalled
               title="Area Installed"
               subheader="(+43%) than last year"
@@ -148,9 +181,9 @@ export default function GeneralAppPage() {
                 ],
               }}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} lg={8}>
+          {/* <Grid item xs={12} lg={8}>
             <AppNewInvoice
               title="New Invoice"
               tableData={_appInvoices}
@@ -162,42 +195,16 @@ export default function GeneralAppPage() {
                 { id: '' },
               ]}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppTopRelated title="Top Related Applications" list={_appRelated} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
             <AppTopInstalledCountries title="Top Installed Countries" list={_appInstalled} />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={6} lg={4}>
-            <AppTopAuthors title="Top Authors" list={_appAuthors} />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <Stack spacing={3}>
-              <AppWidget
-                title="Conversion"
-                total={38566}
-                icon="eva:person-fill"
-                chart={{
-                  series: 48,
-                }}
-              />
-
-              <AppWidget
-                title="Applications"
-                total={55566}
-                icon="eva:email-fill"
-                color="info"
-                chart={{
-                  series: 75,
-                }}
-              />
-            </Stack>
-          </Grid>
         </Grid>
       </Container>
     </>

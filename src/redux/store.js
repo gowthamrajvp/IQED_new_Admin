@@ -2,16 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch as useAppDispatch, useSelector as useAppSelector } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import rootReducer, { rootPersistConfig } from './rootReducer';
+import { UserApi } from './api/User.Api';
 
 // ----------------------------------------------------------------------
 
 const store = configureStore({
   reducer: persistReducer(rootPersistConfig, rootReducer),
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-      immutableCheck: false,
-    }),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(UserApi.middleware),
 });
 
 const persistor = persistStore(store);

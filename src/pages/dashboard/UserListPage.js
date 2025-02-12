@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { paramCase } from 'change-case';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // @mui
 import {
@@ -38,6 +38,7 @@ import {
 } from '../../components/table';
 // sections
 import { UserTableToolbar, UserTableRow } from '../../sections/@dashboard/user/list';
+import { useDeleteUsersMutation, useGetAllUsersQuery } from '../../redux/api/User.Api';
 
 // ----------------------------------------------------------------------
 
@@ -58,16 +59,20 @@ const ROLE_OPTIONS = [
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
-  { id: 'company', label: 'Company', align: 'left' },
-  { id: 'role', label: 'Role', align: 'left' },
-  { id: 'isVerified', label: 'Verified', align: 'center' },
-  { id: 'status', label: 'Status', align: 'left' },
+  { id: 'userName', label: 'Email', align: 'left' },
+  { id: 'xp', label: 'xp', align: 'center' },
+  { id: 'age', label: 'age', align: 'center' },
+  { id: 'schoolName', label: 'school Name', align: 'left' },
+  { id: 'status', label: 'Active', align: 'center' },
   { id: '' },
 ];
 
 // ----------------------------------------------------------------------
 
 export default function UserListPage() {
+  const { data: usersdata, isSuccess, refetch } = useGetAllUsersQuery();
+  const [DeleteUsers] = useDeleteUsersMutation();
+
   const {
     dense,
     page,
@@ -91,7 +96,7 @@ export default function UserListPage() {
 
   const navigate = useNavigate();
 
-  const [tableData, setTableData] = useState(_userList);
+  const [tableData, setTableData] = useState([]);
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -101,6 +106,11 @@ export default function UserListPage() {
 
   const [filterStatus, setFilterStatus] = useState('all');
 
+  useEffect(() => {
+    if (isSuccess && usersdata?.users) {
+      setTableData(usersdata.users);
+    }
+  }, [isSuccess, usersdata]);
   const dataFiltered = applyFilter({
     inputData: tableData,
     comparator: getComparator(order, orderBy),
@@ -143,10 +153,12 @@ export default function UserListPage() {
     setFilterRole(event.target.value);
   };
 
-  const handleDeleteRow = (id) => {
+  const handleDeleteRow = async (id) => {
     const deleteRow = tableData.filter((row) => row.id !== id);
     setSelected([]);
     setTableData(deleteRow);
+    refetch();
+    await DeleteUsers({ userIds: [id] });
 
     if (page > 0) {
       if (dataInPage.length < 2) {
@@ -155,11 +167,12 @@ export default function UserListPage() {
     }
   };
 
-  const handleDeleteRows = (selectedRows) => {
+  const handleDeleteRows = async (selectedRows) => {
     const deleteRows = tableData.filter((row) => !selectedRows.includes(row.id));
+    await DeleteUsers({ userIds: selectedRows });
     setSelected([]);
     setTableData(deleteRows);
-
+    refetch();
     if (page > 0) {
       if (selectedRows.length === dataInPage.length) {
         setPage(page - 1);
@@ -242,7 +255,7 @@ export default function UserListPage() {
               onSelectAllRows={(checked) =>
                 onSelectAllRows(
                   checked,
-                  tableData.map((row) => row.id)
+                  tableData.map((row) => row._id)
                 )
               }
               action={
@@ -266,7 +279,7 @@ export default function UserListPage() {
                   onSelectAllRows={(checked) =>
                     onSelectAllRows(
                       checked,
-                      tableData.map((row) => row.id)
+                      tableData.map((row) => row._id)
                     )
                   }
                 />
@@ -276,11 +289,11 @@ export default function UserListPage() {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
                       <UserTableRow
-                        key={row.id}
+                        key={row._id}
                         row={row}
-                        selected={selected.includes(row.id)}
-                        onSelectRow={() => onSelectRow(row.id)}
-                        onDeleteRow={() => handleDeleteRow(row.id)}
+                        selected={selected.includes(row._id)}
+                        onSelectRow={() => onSelectRow(row._id)}
+                        onDeleteRow={() => handleDeleteRow(row._id)}
                         onEditRow={() => handleEditRow(row.name)}
                       />
                     ))}
@@ -335,6 +348,15 @@ export default function UserListPage() {
   );
 }
 
+const checkUserStatus = (updatedAt) => {
+  const updatedDate = new Date(updatedAt);
+  const currentDate = new Date();
+
+  return updatedDate.getFullYear() === currentDate.getFullYear() &&
+    updatedDate.getMonth() === currentDate.getMonth()
+    ? 'active'
+    : 'banned';
+};
 // ----------------------------------------------------------------------
 
 function applyFilter({ inputData, comparator, filterName, filterStatus, filterRole }) {
@@ -355,7 +377,7 @@ function applyFilter({ inputData, comparator, filterName, filterStatus, filterRo
   }
 
   if (filterStatus !== 'all') {
-    inputData = inputData.filter((user) => user.status === filterStatus);
+    inputData = inputData.filter((user) => checkUserStatus(user.updatedAt) === filterStatus);
   }
 
   if (filterRole !== 'all') {

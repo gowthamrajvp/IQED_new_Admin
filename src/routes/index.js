@@ -197,7 +197,7 @@ export default function Router() {
         {
           path: 'user',
           children: [
-            { element: <Navigate to="/dashboard/user/profile" replace />, index: true },
+            { element: <Navigate to="/dashboard/user/list" replace />, index: true },
             { path: 'profile', element: <UserProfilePage /> },
             { path: 'cards', element: <UserCardsPage /> },
             { path: 'list', element: <UserListPage /> },

@@ -27,10 +27,19 @@ UserTableRow.propTypes = {
   onDeleteRow: PropTypes.func,
   onSelectRow: PropTypes.func,
 };
+const checkUserStatus = (updatedAt) => {
+  const updatedDate = new Date(updatedAt);
+  const currentDate = new Date();
+
+  return (updatedDate.getFullYear() === currentDate.getFullYear() &&
+          updatedDate.getMonth() === currentDate.getMonth())
+    ? "active"
+    : "banned";
+};
 
 export default function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
-  const { name, avatarUrl, company, role, isVerified, status } = row;
-
+  const { name,age,profileImage, schoolName, auth, earnings,updatedAt } = row;
+  const status = checkUserStatus(updatedAt);
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState(null);
@@ -60,7 +69,7 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
 
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={avatarUrl} />
+           {profileImage && <Avatar alt={name} src={profileImage} />}
 
             <Typography variant="subtitle2" noWrap>
               {name}
@@ -68,13 +77,15 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
           </Stack>
         </TableCell>
 
-        <TableCell align="left">{company}</TableCell>
-
-        <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
-          {role}
+        <TableCell align="left">{auth.email}</TableCell>
+        <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
+          {earnings.xp}
+        </TableCell>
+        <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
+          {age}
         </TableCell>
 
-        <TableCell align="center">
+        {/* <TableCell align="center">
           <Iconify
             icon={isVerified ? 'eva:checkmark-circle-fill' : 'eva:clock-outline'}
             sx={{
@@ -84,8 +95,10 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
               ...(!isVerified && { color: 'warning.main' }),
             }}
           />
+        </TableCell> */}
+        <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
+          {schoolName}
         </TableCell>
-
         <TableCell align="left">
           <Label
             variant="soft"

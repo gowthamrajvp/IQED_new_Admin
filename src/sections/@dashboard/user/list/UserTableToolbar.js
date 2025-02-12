@@ -35,7 +35,7 @@ export default function UserTableToolbar({
       }}
       sx={{ px: 2.5, py: 3 }}
     >
-      <TextField
+      {/* <TextField
         fullWidth
         select
         label="Role"
@@ -69,7 +69,7 @@ export default function UserTableToolbar({
             {option}
           </MenuItem>
         ))}
-      </TextField>
+      </TextField> */}
 
       <TextField
         fullWidth
