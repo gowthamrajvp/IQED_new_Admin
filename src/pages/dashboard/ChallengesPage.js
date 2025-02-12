@@ -1,10 +1,11 @@
 import { Helmet } from 'react-helmet-async';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import orderBy from 'lodash/orderBy';
 // form
 import { useForm } from 'react-hook-form';
 // @mui
-import { Container, Typography, Stack } from '@mui/material';
+import { Container, Typography, Stack, Button } from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
 import { getProducts } from '../../redux/slices/product';
@@ -15,9 +16,9 @@ import FormProvider from '../../components/hook-form';
 import CustomBreadcrumbs from '../../components/custom-breadcrumbs';
 import { useSettingsContext } from '../../components/settings';
 // sections
-
+import Iconify from '../../components/iconify';
 import CartWidget from '../../sections/@dashboard/e-commerce/CartWidget';
-import dummyProducts from './dummyData';
+import dummyProducts from './dummyData1';
 import { ChallengeList, ChallengeSearch, ChallengeSort, ChallengeTagFiltered } from '../../sections/@dashboard/e-commerce/challenges';
 
 // ----------------------------------------------------------------------
@@ -99,10 +100,20 @@ export default function ChallengesPage() {
               { name: 'Dashboard', href: PATH_DASHBOARD.root },
               {
                 name: 'Challenges',
-                href: PATH_DASHBOARD.eCommerce.root,
+                href: PATH_DASHBOARD.challenge.root,
               },
               { name: 'Cards' },
             ]}
+            action={
+              <Button
+                component={RouterLink}
+                to={PATH_DASHBOARD.user.new}
+                variant="contained"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+              >
+                New User
+              </Button>
+            }
           />
           <Stack
             spacing={2}
@@ -111,7 +122,7 @@ export default function ChallengesPage() {
             justifyContent="space-between"
             sx={{ mb: 2 }}
           >
-            <ChallengeSearch/>
+            {/* <ChallengeSearch/> */}
 
             <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
               {/* <challengeFilterDrawer
@@ -156,21 +167,17 @@ function applyFilter(products, filters) {
 
   const max = priceRange[1];
 
-  // SORT BY
-  if (sortBy === 'featured') {
-    products = orderBy(products, ['sold'], ['desc']);
-  }
 
   if (sortBy === 'newest') {
     products = orderBy(products, ['createdAt'], ['desc']);
   }
 
   if (sortBy === 'priceDesc') {
-    products = orderBy(products, ['price'], ['desc']);
+    products = orderBy(products, ['eligibleGem'], ['desc']);
   }
 
   if (sortBy === 'priceAsc') {
-    products = orderBy(products, ['price'], ['asc']);
+    products = orderBy(products, ['eligibleGem'], ['asc']);
   }
 
   // FILTER PRODUCTS
