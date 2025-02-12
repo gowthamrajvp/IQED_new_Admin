@@ -43,6 +43,7 @@ import {
   InvoiceDetailsPage,
   InvoiceCreatePage,
   InvoiceEditPage,
+  FeedbackListPage,
   // Dashboard: Blog
   BlogPostsPage,
   BlogPostPage,
@@ -127,6 +128,7 @@ import {
   DemoTextMaxLinePage,
   DemoUploadPage,
   DemoMarkdownPage,
+  FeedbackDetailsPage,
 } from './elements';
 
 // ----------------------------------------------------------------------
@@ -135,16 +137,14 @@ export default function Router() {
   return useRoutes([
     // Auth
     {
-      
       children: [
         {
-          
           element: (
             <GuestGuard>
               <LoginPage />
             </GuestGuard>
           ),
-          index: true
+          index: true,
         },
         {
           path: 'register',
@@ -205,6 +205,14 @@ export default function Router() {
             { path: 'new', element: <UserCreatePage /> },
             { path: ':name/edit', element: <UserEditPage /> },
             { path: 'account', element: <UserAccountPage /> },
+          ],
+        },
+        {
+          path: 'feedback',
+          children: [
+            { element: <Navigate to="/dashboard/feedback/list" replace />, index: true },
+            { path: 'list', element: <FeedbackListPage /> },
+            { path: ':id', element: <FeedbackDetailsPage /> },
           ],
         },
         {

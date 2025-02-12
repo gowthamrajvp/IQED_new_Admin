@@ -12,15 +12,16 @@ import { useSettingsContext } from '../../components/settings';
 import CustomBreadcrumbs from '../../components/custom-breadcrumbs';
 // sections
 import UserNewEditForm from '../../sections/@dashboard/user/UserNewEditForm';
+import { useGetAllUsersQuery } from '../../redux/api/User.Api';
 
 // ----------------------------------------------------------------------
 
 export default function UserEditPage() {
   const { themeStretch } = useSettingsContext();
-
+const { data: usersdata, isSuccess, refetch } = useGetAllUsersQuery();
   const { name } = useParams();
 
-  const currentUser = _userList.find((user) => paramCase(user.name) === name);
+  const currentUser = usersdata?.users.find((user) => paramCase(user._id) === name);
 
   return (
     <>

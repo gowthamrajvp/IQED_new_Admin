@@ -3,12 +3,13 @@ import { useDispatch as useAppDispatch, useSelector as useAppSelector } from 're
 import { persistStore, persistReducer } from 'redux-persist';
 import rootReducer, { rootPersistConfig } from './rootReducer';
 import { UserApi } from './api/User.Api';
+import { FeedbackApi } from './api/Feedback.Api';
 
 // ----------------------------------------------------------------------
 
 const store = configureStore({
   reducer: persistReducer(rootPersistConfig, rootReducer),
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(UserApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(UserApi.middleware,FeedbackApi.middleware),
 });
 
 const persistor = persistStore(store);

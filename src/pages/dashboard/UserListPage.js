@@ -38,6 +38,7 @@ import {
 } from '../../components/table';
 // sections
 import { UserTableToolbar, UserTableRow } from '../../sections/@dashboard/user/list';
+
 import { useDeleteUsersMutation, useGetAllUsersQuery } from '../../redux/api/User.Api';
 
 // ----------------------------------------------------------------------
@@ -80,12 +81,10 @@ export default function UserListPage() {
     orderBy,
     rowsPerPage,
     setPage,
-    //
     selected,
     setSelected,
     onSelectRow,
     onSelectAllRows,
-    //
     onSort,
     onChangeDense,
     onChangePage,
@@ -294,7 +293,7 @@ export default function UserListPage() {
                         selected={selected.includes(row._id)}
                         onSelectRow={() => onSelectRow(row._id)}
                         onDeleteRow={() => handleDeleteRow(row._id)}
-                        onEditRow={() => handleEditRow(row.name)}
+                        onEditRow={() => handleEditRow(row._id)}
                       />
                     ))}
 

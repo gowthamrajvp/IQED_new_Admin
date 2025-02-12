@@ -6,6 +6,7 @@ import chatReducer from './slices/chat';
 import calendarReducer from './slices/calendar';
 import kanbanReducer from './slices/kanban';
 import { UserApi } from './api/User.Api';
+import { FeedbackApi } from './api/Feedback.Api';
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   chat: chatReducer,
   calendar: calendarReducer,
   kanban: kanbanReducer,
-  UserApi:UserApi.reducer
+  UserApi: UserApi.reducer,
+  FeedbackApi: FeedbackApi.reducer,
 });
 
 export default rootReducer;

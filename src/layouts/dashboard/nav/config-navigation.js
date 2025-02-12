@@ -63,15 +63,32 @@ const navConfig = [
       // },
       {
         title: 'user',
-        path: PATH_DASHBOARD.user.root,
+        path: PATH_DASHBOARD.user.list,
         icon: ICONS.user,
+        // children: [
+        //   { title: 'User List', path: PATH_DASHBOARD.user.list },
+        //   { title: 'profile', path: PATH_DASHBOARD.user.profile },
+        //   // { title: 'cards', path: PATH_DASHBOARD.user.cards },
+        //   { title: 'Add User', path: PATH_DASHBOARD.user.new },
+        //   // { title: 'edit', path: PATH_DASHBOARD.user.demoEdit },
+        //   // { title: 'account', path: PATH_DASHBOARD.user.account },
+        // ],
+      },
+      // INVOICE
+      {
+        title: 'feedback',
+        path:PATH_DASHBOARD.feedback.root,
+        icon: ICONS.analytics,
+      },
+      {
+        title: 'invoice',
+        path:PATH_DASHBOARD.invoice.root,
+        icon: ICONS.invoice,
         children: [
-          { title: 'User List', path: PATH_DASHBOARD.user.list },
-          // { title: 'profile', path: PATH_DASHBOARD.user.profile },
-          // { title: 'cards', path: PATH_DASHBOARD.user.cards },
-          { title: 'Add User', path: PATH_DASHBOARD.user.new },
-          // { title: 'edit', path: PATH_DASHBOARD.user.demoEdit },
-          // { title: 'account', path: PATH_DASHBOARD.user.account },
+          { title: 'list', path: PATH_DASHBOARD.invoice.list },
+          { title: 'details', path: PATH_DASHBOARD.invoice.demoView },
+          { title: 'create', path: PATH_DASHBOARD.invoice.new },
+          { title: 'edit', path: PATH_DASHBOARD.invoice.demoEdit },
         ],
       },
       {
@@ -88,18 +105,6 @@ const navConfig = [
         ],
       },
 
-      // INVOICE
-      {
-        title: 'invoice',
-        path: PATH_DASHBOARD.invoice.root,
-        icon: ICONS.invoice,
-        children: [
-          { title: 'list', path: PATH_DASHBOARD.invoice.list },
-          { title: 'details', path: PATH_DASHBOARD.invoice.demoView },
-          { title: 'create', path: PATH_DASHBOARD.invoice.new },
-          { title: 'edit', path: PATH_DASHBOARD.invoice.demoEdit },
-        ],
-      },
 
       // BLOG
       {

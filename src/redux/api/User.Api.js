@@ -14,6 +14,7 @@ export const UserApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     getActiveUsersLast30Days: builder.query({
       query: () => "/users/active-last-30-days",
@@ -29,6 +30,7 @@ export const UserApi = createApi({
     }),
     getAllUsers: builder.query({
       query: () => "/users/all",
+      providesTags: ["User"],
     }),
     deleteUsers: builder.mutation({
       query: ({ userIds }) => ({
@@ -36,11 +38,21 @@ export const UserApi = createApi({
         method: 'POST',
         body: { userIds },
       }),
+      invalidatesTags: ["User"],
+    }),
+    UpdateUser: builder.mutation({
+      query: (data) => ({
+        url: "/users/update",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
     }),
   }),
 });
 
 export const {
+  useUpdateUserMutation,
   useDeleteUsersMutation,
   useGetActiveUsersLast30DaysQuery,
   useGetTotalUsersQuery,
