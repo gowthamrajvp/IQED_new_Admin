@@ -40,6 +40,9 @@ export const GeneralFilePage = Loadable(lazy(() => import('../pages/dashboard/Ge
 export const EcommerceShopPage = Loadable(
   lazy(() => import('../pages/dashboard/EcommerceShopPage'))
 );
+export const ChallengesPage = Loadable(
+  lazy(() => import('../pages/dashboard/ChallengesPage'))
+);
 export const EcommerceProductDetailsPage = Loadable(
   lazy(() => import('../pages/dashboard/EcommerceProductDetailsPage'))
 );

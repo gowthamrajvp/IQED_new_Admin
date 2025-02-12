@@ -22,6 +22,7 @@ import {
   ProductDetailsCarousel,
 } from '../../sections/@dashboard/e-commerce/details';
 import CartWidget from '../../sections/@dashboard/e-commerce/CartWidget';
+import dummyProducts from './dummyData';
 
 // ----------------------------------------------------------------------
 
@@ -52,15 +53,28 @@ export default function EcommerceProductDetailsPage() {
 
   const dispatch = useDispatch();
 
-  const { product, isLoading, checkout } = useSelector((state) => state.product);
+  // const { product, isLoading, checkout } = useSelector((state) => state.product);
 
   const [currentTab, setCurrentTab] = useState('description');
 
+  const [product, setProduct] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [checkout, setCheckout] = useState({ totalItems: 0 }); // Dummy checkout data
+
+  // useEffect(() => {
+  //   if (name) {
+  //     dispatch(getProduct(name));
+  //   }
+  // }, [dispatch, name]);
+
   useEffect(() => {
     if (name) {
-      dispatch(getProduct(name));
+      const foundProduct = dummyProducts.find((p) => p.name === name);
+      setProduct(foundProduct || null);
+      setIsLoading(false);
     }
-  }, [dispatch, name]);
+  }, [name]);
+
 
   const handleAddCart = (newProduct) => {
     dispatch(addToCart(newProduct));

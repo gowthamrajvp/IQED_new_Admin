@@ -33,6 +33,7 @@ import {
   UserAccountPage,
   // Dashboard: Ecommerce
   EcommerceShopPage,
+  ChallengesPage,
   EcommerceCheckoutPage,
   EcommerceProductListPage,
   EcommerceProductEditPage,
@@ -188,6 +189,18 @@ export default function Router() {
           children: [
             { element: <Navigate to="/dashboard/e-commerce/shop" replace />, index: true },
             { path: 'shop', element: <EcommerceShopPage /> },
+            { path: 'product/:name', element: <EcommerceProductDetailsPage /> },
+            { path: 'list', element: <EcommerceProductListPage /> },
+            { path: 'product/new', element: <EcommerceProductCreatePage /> },
+            { path: 'product/:name/edit', element: <EcommerceProductEditPage /> },
+            { path: 'checkout', element: <EcommerceCheckoutPage /> },
+          ],
+        },
+        {
+          path: 'challenge',
+          children: [
+            { element: <Navigate to="/dashboard/challenge/card" replace />, index: true },
+            { path: 'card', element: <ChallengesPage /> },
             { path: 'product/:name', element: <EcommerceProductDetailsPage /> },
             { path: 'list', element: <EcommerceProductListPage /> },
             { path: 'product/new', element: <EcommerceProductCreatePage /> },
