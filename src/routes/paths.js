@@ -82,14 +82,10 @@ export const PATH_DASHBOARD = {
   },
   challenge: {
     root: path(ROOTS_DASHBOARD, '/challenge'),
-    card: path(ROOTS_DASHBOARD, '/challenge/card'),
     list: path(ROOTS_DASHBOARD, '/challenge/list'),
-    checkout: path(ROOTS_DASHBOARD, '/challenge/checkout'),
-    new: path(ROOTS_DASHBOARD, '/challenge/product/new'),
-    view: (name) => path(ROOTS_DASHBOARD, `/challenge/product/${name}`),
-    edit: (name) => path(ROOTS_DASHBOARD, `/challenge/product/${name}/edit`),
-    demoEdit: path(ROOTS_DASHBOARD, '/challenge/product/nike-blazer-low-77-vintage/edit'),
-    demoView: path(ROOTS_DASHBOARD, '/challenge/product/nike-air-force-1-ndestrukt'),
+    orders: path(ROOTS_DASHBOARD, '/challenge/orders'),
+    edit: (name) => path(ROOTS_DASHBOARD, `/challenge/${name}/edit`),
+    new: path(ROOTS_DASHBOARD, '/challenge/new'),
   },
   invoice: {
     root: path(ROOTS_DASHBOARD, '/invoice'),

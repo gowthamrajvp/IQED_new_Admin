@@ -73,7 +73,7 @@ export default function ChallengesPage() {
     setProducts(dummyProducts); // Simulating data fetch
   }, []);
 
-  
+
   const handleResetFilter = () => {
     reset();
   };
@@ -107,11 +107,11 @@ export default function ChallengesPage() {
             action={
               <Button
                 component={RouterLink}
-                to={PATH_DASHBOARD.user.new}
+                to={PATH_DASHBOARD.challenge.new}
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
               >
-                New User
+                New Product
               </Button>
             }
           />
