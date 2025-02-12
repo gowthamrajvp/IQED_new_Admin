@@ -15,19 +15,14 @@ import FormProvider from '../../components/hook-form';
 import CustomBreadcrumbs from '../../components/custom-breadcrumbs';
 import { useSettingsContext } from '../../components/settings';
 // sections
-import {
-  ShopTagFiltered,
-  ShopProductSort,
-  ShopProductList,
-  ShopFilterDrawer,
-  ShopProductSearch,
-} from '../../sections/@dashboard/e-commerce/shop';
+
 import CartWidget from '../../sections/@dashboard/e-commerce/CartWidget';
 import dummyProducts from './dummyData';
+import { ChallengeList, ChallengeSearch, ChallengeSort, ChallengeTagFiltered } from '../../sections/@dashboard/e-commerce/challenges';
 
 // ----------------------------------------------------------------------
 
-export default function EcommerceShopPage() {
+export default function ChallengesPage() {
   const { themeStretch } = useSettingsContext();
 
   const [products, setProducts] = useState([]);
@@ -99,17 +94,16 @@ export default function EcommerceShopPage() {
       <FormProvider methods={methods}>
         <Container maxWidth={themeStretch ? false : 'lg'}>
           <CustomBreadcrumbs
-            heading="Shop"
+            heading="Challenges"
             links={[
               { name: 'Dashboard', href: PATH_DASHBOARD.root },
               {
                 name: 'Challenges',
                 href: PATH_DASHBOARD.eCommerce.root,
               },
-              { name: 'Challenge List' },
+              { name: 'Cards' },
             ]}
           />
-
           <Stack
             spacing={2}
             direction={{ xs: 'column', sm: 'row' }}
@@ -117,18 +111,17 @@ export default function EcommerceShopPage() {
             justifyContent="space-between"
             sx={{ mb: 2 }}
           >
-            <ShopProductSearch />
+            <ChallengeSearch/>
 
             <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-              {/* <ShopFilterDrawer
+              {/* <challengeFilterDrawer
                 isDefault={isDefault}
                 open={openFilter}
                 onOpen={handleOpenFilter}
                 onClose={handleCloseFilter}
                 onResetFilter={handleResetFilter}
               /> */}
-
-              <ShopProductSort />
+              <ChallengeSort />
             </Stack>
           </Stack>
 
@@ -140,12 +133,12 @@ export default function EcommerceShopPage() {
                   &nbsp;Products found
                 </Typography>
 
-                <ShopTagFiltered isFiltered={!isDefault} onResetFilter={handleResetFilter} />
+                <ChallengeTagFiltered isFiltered={!isDefault} onResetFilter={handleResetFilter} />
               </>
             )}
           </Stack>
 
-          <ShopProductList products={dataFiltered} loading={!products.length && isDefault} />
+          <ChallengeList products={dataFiltered} loading={!products.length && isDefault} />
 
           {/* <CartWidget totalItems={checkout.totalItems} /> */}
         </Container>
