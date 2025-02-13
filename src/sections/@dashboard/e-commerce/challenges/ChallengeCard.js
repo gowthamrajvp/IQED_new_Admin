@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { Box, Card, Link, Stack, Fab, Typography, Button } from '@mui/material';
 // import BorderColorIcon from '@mui/icons-material/BorderColor';
-import { styled } from "@mui/system";
+import { styled } from '@mui/system';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // utils
@@ -20,6 +20,7 @@ import { ColorPreview } from '../../../../components/color-utils';
 import { useDispatch } from '../../../../redux/store';
 // import { IQGemIcon } from '/assets/illustrations';
 import { IQGemIcon } from '../../../../assets/illustrations';
+import { useDeleteChallengeMutation } from '../../../../redux/api/User.Api';
 
 // ----------------------------------------------------------------------
 
@@ -29,16 +30,16 @@ ChallengeCard.propTypes = {
 
 const StatItem = styled(Box)({
   flex: 1,
-  textAlign: "center",
-  display: "flex",
-  flexDirection: "column",
+  textAlign: 'center',
+  display: 'flex',
+  flexDirection: 'column',
   gap: 1,
-  justifyContent: "space-between",
+  justifyContent: 'space-between',
 });
 
 const StatRow = styled(Box)({
-  display: "flex",
-  justifyContent: "space-between",
+  display: 'flex',
+  justifyContent: 'space-between',
   // marginTop: 20,
 });
 
@@ -60,12 +61,31 @@ const StatRow = styled(Box)({
 
 export default function ChallengeCard({ product }) {
   // const { id, name, cover, price, colors, status, available, sizes, priceSale } = product;
-  const { id, title, banner, eligibleGem, participantsCount, productName, description, sponsoreName, TestTime, QuestionCount, Active, } = product;
-
+  const {
+    _id,
+    title,
+    banner,
+    eligibleGem,
+    participantsCount,
+    productName,
+    description,
+    sponsoreName,
+    TestTime,
+    QuestionCount,
+    Active,
+  } = product;
+  const [DeleteChallenge] = useDeleteChallengeMutation();
   const dispatch = useDispatch();
 
-  const linkTo = PATH_DASHBOARD.challenge.edit(paramCase(productName));
-
+  const linkTo = PATH_DASHBOARD.challenge.edit(paramCase(_id));
+  const handleDelete = async (id) => {
+    try {
+      await DeleteChallenge({challengeId:id}).unwrap();
+      console.log('Challenge deleted successfully');
+    } catch (error) {
+      console.error('Error deleting challenge:', error);
+    }
+  };
   // const handleAddCart = async () => {
   //   const newProduct = {
   //     id,
@@ -105,7 +125,7 @@ export default function ChallengeCard({ product }) {
               textTransform: 'uppercase',
             }}
           >
-            {Active ? "Active" : "Inactive"}
+            {Active ? 'Active' : 'Inactive'}
           </Label>
         )}
 
@@ -130,9 +150,16 @@ export default function ChallengeCard({ product }) {
       <Stack spacing={2.5} sx={{ p: 3 }}>
         <Box>
           <Box display="flex" alignItems="center">
-            <Link component={RouterLink} to={linkTo} color="inherit" variant="subtitle2" noWrap sx={{ display: 'flex', alignItems: 'center',justifyContent:'center' }}>
+            {/* <Link
+              component={RouterLink}
+              to={linkTo}
+              color="inherit"
+              variant="subtitle2"
+              noWrap
+              sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            > */}
               {productName}
-              <Iconify
+              {/* <Iconify
                 icon="line-md:edit"
                 sx={{
                   width: 15,
@@ -141,8 +168,8 @@ export default function ChallengeCard({ product }) {
                   // position: 'absolute',
                   // right: theme.spacing(-3),
                 }}
-              />
-            </Link>
+              /> */}
+            {/* </Link> */}
           </Box>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             {description}
@@ -150,20 +177,20 @@ export default function ChallengeCard({ product }) {
         </Box>
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "left",
-            alignItems: "left",
-            borderLeft: "solid 2px",
-            pl: "5px",
-            my: "10px",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'left',
+            alignItems: 'left',
+            borderLeft: 'solid 2px',
+            pl: '5px',
+            my: '10px',
           }}
         >
           <Typography
             fontWeight="bold"
             sx={{
-              fontSize: "8px",
-              mb: "2px",
+              fontSize: '8px',
+              mb: '2px',
             }}
           >
             Challenge Topic
@@ -171,8 +198,8 @@ export default function ChallengeCard({ product }) {
           <Typography
             fontWeight="bold"
             sx={{
-              fontSize: "13px",
-              borderRadius: "10px",
+              fontSize: '13px',
+              borderRadius: '10px',
             }}
           >
             {title}
@@ -181,50 +208,50 @@ export default function ChallengeCard({ product }) {
         <StatRow>
           <StatItem
             sx={{
-              borderRight: "1px solid",
+              borderRight: '1px solid',
             }}
           >
-            <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
               {QuestionCount}
             </Typography>
             <Typography
               sx={{
-                fontSize: "10px",
-                fontWeight: "bold",
-                py: "2px",
+                fontSize: '10px',
+                fontWeight: 'bold',
+                py: '2px',
               }}
             >
               Total <br />
-              MCQ{" "}
+              MCQ{' '}
             </Typography>
           </StatItem>
           <StatItem
             sx={{
-              borderRight: "1px solid",
+              borderRight: '1px solid',
             }}
           >
-            <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
               {TestTime} Min
             </Typography>
             <Typography
               sx={{
-                fontSize: "10px",
-                fontWeight: "bold",
-                py: "2px",
+                fontSize: '10px',
+                fontWeight: 'bold',
+                py: '2px',
               }}
             >
               MCQ <br /> Time
             </Typography>
           </StatItem>
           <StatItem>
-            <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
               {participantsCount}
             </Typography>
             <Typography
               sx={{
-                fontSize: "10px",
-                fontWeight: "bold",
-                py: "2px",
+                fontSize: '10px',
+                fontWeight: 'bold',
+                py: '2px',
               }}
             >
               Total <br />
@@ -232,26 +259,23 @@ export default function ChallengeCard({ product }) {
             </Typography>
           </StatItem>
         </StatRow>
-        <Stack direction="row" spacing={2.5} alignItems="center" justifyContent="center" sx={{ typography: 'subtitle1' }}>
-
-          <Typography
-            sx={{
-              textAlign: "center",
-              fontWeight: "bold",
-
-            }}
-          >
-            Eligible Gem
-          </Typography>
+        <Stack
+          direction="row"
+          spacing={2.5}
+          alignItems="center"
+          justifyContent="center"
+          sx={{ typography: 'subtitle1' }}
+        >
+          <Button color="error" onClick={()=>handleDelete(_id)}>DELETE</Button>
 
           <Typography
             variant="body"
             fontWeight="bold"
             sx={{
-              display: "flex",
-              alignItems: "center",
-              borderLeft: "2px solid",
-              pl: "10px",
+              display: 'flex',
+              alignItems: 'center',
+              borderLeft: '2px solid',
+              pl: '10px',
             }}
           >
             <Box
@@ -259,14 +283,12 @@ export default function ChallengeCard({ product }) {
               src={IQGemIcon}
               alt="Gem Icon"
               sx={{
-                height: "18px",
-                marginRight: "4px",
+                height: '18px',
+                marginRight: '4px',
               }}
             />
-            {eligibleGem}
+            Gem {eligibleGem}
           </Typography>
-
-
         </Stack>
       </Stack>
     </Card>

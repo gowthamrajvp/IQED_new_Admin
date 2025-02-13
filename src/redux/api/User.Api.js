@@ -15,7 +15,7 @@ export const UserApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["User"],
+  tagTypes: ["User",["challenge"]],
   endpoints: (builder) => ({
     getActiveUsersLast30Days: builder.query({
       query: () => "/users/active-last-30-days",
@@ -49,15 +49,43 @@ export const UserApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+    getAllTopic: builder.query({
+      query: () => "/topics",
+    }),
+    DeleteChallenge: builder.mutation({
+      query: (data) => ({
+        url: "/challenge/delete",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["challenge"],
+    }),
+    getAllChallenge: builder.query({
+      query: () => "/challenge",
+      providesTags: ["challenge"],
+    }),
+    CreateChallenge: builder.mutation({
+      query: (data) => ({
+        url: "/challengeCreate",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["challenge"],
+    }),
   }),
 });
 
+
 export const {
-  useUpdateUserMutation,
+  useCreateChallengeMutation,
+  useUpdateUserMutation, 
   useDeleteUsersMutation,
   useGetActiveUsersLast30DaysQuery,
   useGetTotalUsersQuery,
   useGetUsersCreatedThisWeekQuery,
   useGetUsersCreatedLastWeekQuery,
   useGetAllUsersQuery,
+  useGetAllChallengeQuery,
+  useGetAllTopicQuery,
+  useDeleteChallengeMutation
 } = UserApi;

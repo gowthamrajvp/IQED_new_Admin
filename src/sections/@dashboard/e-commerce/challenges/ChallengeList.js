@@ -14,6 +14,7 @@ ChallengeList.propTypes = {
 };
 
 export default function ChallengeList({ products, loading, ...other }) {
+  console.log(products)
   return (
     <Box
       gap={3}
@@ -28,7 +29,7 @@ export default function ChallengeList({ products, loading, ...other }) {
     >
       {(loading ? [...Array(12)] : products).map((product, index) =>
         product ? (
-          <ChallengeCard key={product.id} product={product} />
+          <ChallengeCard key={product._id} product={product} />
         ) : (
           <SkeletonProductItem key={index} />
         )

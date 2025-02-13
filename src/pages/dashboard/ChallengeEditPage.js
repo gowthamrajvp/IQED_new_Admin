@@ -17,25 +17,27 @@ import ProductNewEditForm from '../../sections/@dashboard/e-commerce/ProductNewE
 import dummyProducts from './dummyData1';
 // sections
 import {ChallengeNewEditForm} from '../../sections/@dashboard/e-commerce/challenges';
+import { useGetAllChallengeQuery } from '../../redux/api/User.Api';
 // ----------------------------------------------------------------------
 
 export default function ChallengeEditPage() {
   const { themeStretch } = useSettingsContext();
-
+ const { data: productsdata, isSuccess, refetch } = useGetAllChallengeQuery();
   const dispatch = useDispatch();
 
   const { name } = useParams();
+
   const [currentProduct, setCurrentProduct] = useState();
   // const currentProduct = useSelector((state) =>
   //   state.product.products.find((product) => paramCase(product.name) === name)
   // );
   useEffect(() => {
-    setCurrentProduct(dummyProducts.find((product) => paramCase(product.productName) === name) )
-  }, [name]);
+    setCurrentProduct(productsdata?.challenges?.find((product) => product._id === name) )
+  }, [isSuccess,productsdata,name]);
   // useEffect(() => {
   //   dispatch(getProducts());
   // }, [dispatch]);
-console.log("currentProduct",currentProduct)
+console.log("currentProduct",currentProduct,name)
   return (
     <>
       <Helmet>

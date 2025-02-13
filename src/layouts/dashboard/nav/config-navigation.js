@@ -83,12 +83,12 @@ const navConfig = [
       {
         title: 'syllabus',
         path:PATH_DASHBOARD.syllabus,
-        icon: ICONS.analytics,
+        icon: ICONS.blank,
       },
       // {
       //   title: 'invoice',
       //   path:PATH_DASHBOARD.invoice.root,
-      //   icon: ICONS.invoice,
+      //   icon: ICONS.invoice,iin
       //   children: [
       //     { title: 'list', path: PATH_DASHBOARD.invoice.list },
       //     { title: 'details', path: PATH_DASHBOARD.invoice.demoView },
