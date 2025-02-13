@@ -58,7 +58,7 @@ export default function NavVertical({ openNav, onCloseNav }) {
       >
         <Logo />
 
-        <NavAccount />
+        {/* <NavAccount /> */}
       </Stack>
 
       <NavSectionVertical data={navConfig} />

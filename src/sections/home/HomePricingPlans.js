@@ -7,7 +7,7 @@ import { Box, Tab, Tabs, Stack, Button, Divider, Container, Typography } from '@
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 // routes
-import { PATH_MINIMAL_ON_STORE } from '../../routes/paths';
+// import { PATH_MINIMAL_ON_STORE } from '../../routes/paths';
 // _mock_
 import { _homePlans } from '../../_mock/arrays';
 // components
@@ -263,7 +263,7 @@ function PlanCard({ plan, sx, ...other }) {
       </Stack>
 
       <Stack alignItems="flex-end">
-        <Button
+        {/* <Button
           color="inherit"
           size="small"
           target="_blank"
@@ -272,7 +272,7 @@ function PlanCard({ plan, sx, ...other }) {
           endIcon={<Iconify icon="eva:chevron-right-fill" />}
         >
           Learn more
-        </Button>
+        </Button> */}
       </Stack>
     </Stack>
   );

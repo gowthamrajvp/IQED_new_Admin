@@ -33,6 +33,8 @@ const ICONS = {
   ecommerce: icon('ic_ecommerce'),
   analytics: icon('ic_analytics'),
   dashboard: icon('ic_dashboard'),
+  feedback: icon('ic_chat'),
+  questions: icon('ic_questions'),
 };
 
 const navConfig = [
@@ -75,11 +77,7 @@ const navConfig = [
         // ],
       },
       // INVOICE
-      {
-        title: 'feedback',
-        path:PATH_DASHBOARD.feedback.root,
-        icon: ICONS.analytics,
-      },
+      
       {
         title: 'syllabus',
         path:PATH_DASHBOARD.syllabus,
@@ -124,27 +122,32 @@ const navConfig = [
       {
         title: 'Questions',
         path:PATH_DASHBOARD.question.root,
-        icon: ICONS.invoice,
+        icon: ICONS.questions,
         // children: [
         //   { title: 'list', path: PATH_DASHBOARD.question.list },
         // ],
       },
       // BLOG
       {
-        title: 'blog',
-        path: PATH_DASHBOARD.blog.root,
-        icon: ICONS.blog,
-        children: [
-          { title: 'posts', path: PATH_DASHBOARD.blog.posts },
-          { title: 'post', path: PATH_DASHBOARD.blog.demoView },
-          { title: 'create', path: PATH_DASHBOARD.blog.new },
-        ],
+        title: 'feedback',
+        path:PATH_DASHBOARD.feedback.root,
+        icon: ICONS.feedback,
       },
-      {
-        title: 'File manager',
-        path: PATH_DASHBOARD.fileManager,
-        icon: ICONS.folder,
-      },
+      // {
+      //   title: 'blog',
+      //   path: PATH_DASHBOARD.blog.root,
+      //   icon: ICONS.blog,
+      //   children: [
+      //     { title: 'posts', path: PATH_DASHBOARD.blog.posts },
+      //     { title: 'post', path: PATH_DASHBOARD.blog.demoView },
+      //     { title: 'create', path: PATH_DASHBOARD.blog.new },
+      //   ],
+      // },
+      // {
+      //   title: 'File manager',
+      //   path: PATH_DASHBOARD.fileManager,
+      //   icon: ICONS.folder,
+      // },
     ],
   },
 

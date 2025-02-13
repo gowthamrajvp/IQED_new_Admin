@@ -11,7 +11,7 @@ import { bgBlur } from '../../utils/cssStyles';
 // config
 import { HEADER } from '../../config-global';
 // routes
-import { PATH_DOCS, PATH_MINIMAL_ON_STORE } from '../../routes/paths';
+// import { PATH_DOCS, PATH_MINIMAL_ON_STORE } from '../../routes/paths';
 // components
 import Logo from '../../components/logo';
 import Label from '../../components/label';
@@ -55,7 +55,7 @@ export default function Header() {
         <Container sx={{ height: 1, display: 'flex', alignItems: 'center' }}>
           <Logo />
 
-          <Link
+          {/* <Link
             href={PATH_DOCS.changelog}
             target="_blank"
             rel="noopener"
@@ -63,15 +63,15 @@ export default function Header() {
             sx={{ ml: 1 }}
           >
             <Label color="info"> v4.1.0 </Label>
-          </Link>
+          </Link> */}
 
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <NavDesktop isOffset={isOffset} data={navConfig} />}
 
-          <Button variant="contained" target="_blank" rel="noopener" href={PATH_MINIMAL_ON_STORE}>
+          {/* <Button variant="contained" target="_blank" rel="noopener" href={PATH_MINIMAL_ON_STORE}>
             Purchase Now
-          </Button>
+          </Button> */}
 
           {!isDesktop && <NavMobile isOffset={isOffset} data={navConfig} />}
         </Container>

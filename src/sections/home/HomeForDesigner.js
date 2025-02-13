@@ -6,7 +6,7 @@ import { Box, Grid, Container, Typography, Button } from '@mui/material';
 // utils
 import { filterStyles, textGradient, bgGradient } from '../../utils/cssStyles';
 // routes
-import { PATH_FIGMA_PREVIEW } from '../../routes/paths';
+// import { PATH_FIGMA_PREVIEW } from '../../routes/paths';
 // components
 import Iconify from '../../components/iconify';
 import { MotionViewport, varFade } from '../../components/animate';
@@ -123,7 +123,7 @@ function Description() {
       </m.div>
 
       <m.div variants={varFade().inUp}>
-        <Button
+        {/* <Button
           color="inherit"
           size="large"
           variant="outlined"
@@ -140,7 +140,7 @@ function Description() {
           }}
         >
           Go to Figma Workspace
-        </Button>
+        </Button> */}
       </m.div>
     </StyledDescription>
   );

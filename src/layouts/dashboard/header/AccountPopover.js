@@ -20,14 +20,14 @@ const OPTIONS = [
     label: 'Home',
     linkTo: '/',
   },
-  {
-    label: 'Profile',
-    linkTo: PATH_DASHBOARD.user.profile,
-  },
-  {
-    label: 'Settings',
-    linkTo: PATH_DASHBOARD.user.account,
-  },
+  // {
+  //   label: 'Profile',
+  //   linkTo: PATH_DASHBOARD.user.profile,
+  // },
+  // {
+  //   label: 'Settings',
+  //   linkTo: PATH_DASHBOARD.user.account,
+  // },
 ];
 
 // ----------------------------------------------------------------------
@@ -52,7 +52,7 @@ export default function AccountPopover() {
   const handleLogout = async () => {
     try {
       logout();
-      navigate(PATH_AUTH.login, { replace: true });
+      navigate(PATH_AUTH, { replace: true });
       handleClosePopover();
     } catch (error) {
       console.error(error);
@@ -90,23 +90,19 @@ export default function AccountPopover() {
       <MenuPopover open={openPopover} onClose={handleClosePopover} sx={{ width: 200, p: 0 }}>
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {user?.displayName}
-          </Typography>
-
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {user?.email}
-          </Typography>
+            Admin
+          </Typography>          
         </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <Stack sx={{ p: 1 }}>
+        {/* <Stack sx={{ p: 1 }}>
           {OPTIONS.map((option) => (
             <MenuItem key={option.label} onClick={() => handleClickItem(option.linkTo)}>
               {option.label}
             </MenuItem>
           ))}
-        </Stack>
+        </Stack> */}
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 

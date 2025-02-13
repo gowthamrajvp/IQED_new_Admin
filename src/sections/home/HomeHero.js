@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled, alpha, useTheme } from '@mui/material/styles';
 import { Button, Box, Link, Container, Typography, Stack, Grid } from '@mui/material';
 // routes
-import { PATH_DASHBOARD, PATH_FIGMA_PREVIEW, PATH_FREE_VERSION } from '../../routes/paths';
+import { PATH_DASHBOARD, } from '../../routes/paths';
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 // utils
@@ -193,7 +193,7 @@ function Description() {
               Live Preview
             </Button>
 
-            <Link
+            {/* <Link
               color="inherit"
               variant="caption"
               target="_blank"
@@ -203,10 +203,10 @@ function Description() {
             >
               <Iconify icon="eva:external-link-fill" width={16} sx={{ mr: 0.5 }} />
               Get Free Version
-            </Link>
+            </Link> */}
           </Stack>
 
-          <Button
+          {/* <Button
             color="inherit"
             size="large"
             variant="outlined"
@@ -217,7 +217,7 @@ function Description() {
             sx={{ borderColor: 'text.primary' }}
           >
             Design Preview
-          </Button>
+          </Button> */}
         </Stack>
       </m.div>
 

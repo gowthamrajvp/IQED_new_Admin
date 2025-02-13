@@ -5,7 +5,7 @@ import { useAuthContext } from '../../../auth/useAuthContext';
 // locales
 import { useLocales } from '../../../locales';
 // routes
-import { PATH_DOCS } from '../../../routes/paths';
+// import { PATH_DOCS } from '../../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -38,9 +38,9 @@ export default function NavDocs() {
         </Typography>
       </div>
 
-      <Button href={PATH_DOCS.root} target="_blank" rel="noopener" variant="contained">
+      {/* <Button href={PATH_DOCS.root} target="_blank" rel="noopener" variant="contained">
         {`${translate('docs.documentation')}`}
-      </Button>
+      </Button> */}
     </Stack>
   );
 }
