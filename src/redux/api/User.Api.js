@@ -15,7 +15,7 @@ export const UserApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["User",["challenge"]],
+  tagTypes: ["User","challenge","Question"],
   endpoints: (builder) => ({
     getActiveUsersLast30Days: builder.query({
       query: () => "/users/active-last-30-days",
@@ -64,6 +64,10 @@ export const UserApi = createApi({
       query: () => "/challenge",
       providesTags: ["challenge"],
     }),
+    getAllQuestion: builder.query({
+      query: () => "/question",
+      providesTags: ["Question"],
+    }),
     CreateChallenge: builder.mutation({
       query: (data) => ({
         url: "/challengeCreate",
@@ -72,6 +76,15 @@ export const UserApi = createApi({
       }),
       invalidatesTags: ["challenge"],
     }),
+    DeleteQuestion: builder.mutation({
+      query: (data) => ({
+        url: "/question/delete",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Question"],
+    }),
+
   }),
 });
 
@@ -87,5 +100,7 @@ export const {
   useGetAllUsersQuery,
   useGetAllChallengeQuery,
   useGetAllTopicQuery,
-  useDeleteChallengeMutation
+  useDeleteChallengeMutation,
+  useGetAllQuestionQuery,
+  useDeleteQuestionMutation
 } = UserApi;

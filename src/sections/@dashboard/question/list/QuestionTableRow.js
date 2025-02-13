@@ -27,7 +27,8 @@ QuestionTableRow.propTypes = {
 };
 
 export default function QuestionTableRow({ row, selected, onSelectRow, onEditRow, onDeleteRow }) {
-  const { topics, question, options, correctAnswer } = row;
+  const { _id, topics, question, options, correctAnswer } = row;
+  console.log(row)
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openPopover, setOpenPopover] = useState(null);
 
@@ -142,14 +143,14 @@ export default function QuestionTableRow({ row, selected, onSelectRow, onEditRow
       </TableRow>
 
       <MenuPopover open={openPopover} onClose={handleClosePopover} arrow="right-top" sx={{ width: 160 }}>
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             onEditRow();
             handleClosePopover();
           }}
         >
           <Iconify icon="eva:edit-fill" /> Edit
-        </MenuItem>
+        </MenuItem> */}
         <Divider sx={{ borderStyle: 'dashed' }} />
         <MenuItem
           onClick={() => {
