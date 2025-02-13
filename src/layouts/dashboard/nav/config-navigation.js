@@ -121,7 +121,14 @@ const navConfig = [
         ],
       },
 
-
+      {
+        title: 'Questions',
+        path:PATH_DASHBOARD.question.root,
+        icon: ICONS.invoice,
+        // children: [
+        //   { title: 'list', path: PATH_DASHBOARD.question.list },
+        // ],
+      },
       // BLOG
       {
         title: 'blog',
