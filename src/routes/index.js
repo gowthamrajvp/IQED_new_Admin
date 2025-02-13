@@ -159,9 +159,10 @@ export default function Router() {
       children: [
         {
           element: (
-            <GuestGuard>
-              <LoginPage />
-            </GuestGuard>
+            // <GuestGuard>
+            //   <LoginPage />
+            // </GuestGuard>
+            <Navigate to="dashboard/app" replace />
           ),
           index: true,
         },
@@ -190,7 +191,9 @@ export default function Router() {
     {
       path: 'dashboard',
       element: (
-        <DashboardLayout />
+        // <AuthGuard>
+          <DashboardLayout />
+        // </AuthGuard>
       ),
       children: [
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },

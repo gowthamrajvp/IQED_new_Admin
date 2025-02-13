@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import sumBy from 'lodash/sumBy';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // @mui
@@ -44,11 +44,15 @@ import {
 // sections
 import { QuestionTableRow, QuestionTableToolbar } from '../../sections/@dashboard/question/list';
 import question from "./questionData"
+import {  useDeleteQuestionMutation, useGetAllQuestionQuery, useGetAllTopicQuery } from '../../redux/api/User.Api';
 // ----------------------------------------------------------------------
 
 const Topics= [
+  "all",
   'numbers',
-  'speed'
+  'speed',
+  "Types of Numbers"
+
 ];
 
 const TABLE_HEAD = [
@@ -60,8 +64,11 @@ const TABLE_HEAD = [
 // ----------------------------------------------------------------------
 
 export default function QuestionListPage() {
+  const { data: TotalTopic } = useGetAllTopicQuery();
+  const [DeleteQuestion] = useDeleteQuestionMutation();
+  const {data ,isSuccess} = useGetAllQuestionQuery();
   const theme = useTheme();
-
+  const TopicNameList = TotalTopic?.data.map((p)=> p.name)
   const { themeStretch } = useSettingsContext();
 
   const navigate = useNavigate();
@@ -85,9 +92,10 @@ export default function QuestionListPage() {
     onChangeRowsPerPage,
   } = useTable({ defaultOrderBy: 'createDate' });
 
-  const [tableData, setTableData] = useState(question);
+  const [tableData, setTableData] = useState([]);
   // const [tableData, setTableData] = useState(_invoices);
-  console.log("tableData",tableData)
+
+
   const [filterName, setFilterName] = useState('');
 
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -96,9 +104,16 @@ export default function QuestionListPage() {
 
   const [filterEndDate, setFilterEndDate] = useState(null);
 
-  const [filterService, setFilterService] = useState(Topics[0]);
+  const [filterService, setFilterService] = useState('all');
 
   const [filterStartDate, setFilterStartDate] = useState(null);
+
+  useEffect(() => {
+    if (isSuccess && data?.data) {
+      setTableData(data?.data);
+    }
+  }, [isSuccess, data]);
+
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -135,11 +150,12 @@ export default function QuestionListPage() {
     setFilterService(event.target.value);
   };
 
-  const handleDeleteRow = (id) => {
-    const deleteRow = tableData.filter((row) => row.id !== id);
-    setSelected([]);
-    setTableData(deleteRow);
-
+  const handleDeleteRow =async (id) => {
+    await DeleteQuestion({id}).then(()=>{
+      const deleteRow = tableData.filter((row) => row._id !== id);
+      setSelected([]);
+      setTableData(deleteRow);
+    })
     if (page > 0) {
       if (dataInPage.length < 2) {
         setPage(page - 1);
@@ -148,7 +164,7 @@ export default function QuestionListPage() {
   };
 
   const handleDeleteRows = (selectedRows) => {
-    const deleteRows = tableData.filter((row) => !selectedRows.includes(row.id));
+    const deleteRows = tableData.filter((row) => !selectedRows.includes(row._id));
     setSelected([]);
     setTableData(deleteRows);
 
@@ -196,23 +212,23 @@ export default function QuestionListPage() {
               name: 'List',
             },
           ]}
-          action={
-            <Button
-              component={RouterLink}
-              to={PATH_DASHBOARD.question.new}
-              variant="contained"
-              startIcon={<Iconify icon="eva:plus-fill" />}
-            >
-              Add Questions
-            </Button>
-          }
+          // action={
+          //   <Button
+          //     component={RouterLink}
+          //     to={PATH_DASHBOARD.question.new}
+          //     variant="contained"
+          //     startIcon={<Iconify icon="eva:plus-fill" />}
+          //   >
+          //     Add Questions
+          //   </Button>
+          // }
         />
 
         <Card>
           <Divider />
           <QuestionTableToolbar
             filterService={filterService}
-            optionsService={Topics}
+            optionsService={TopicNameList||['all']}
             onFilterService={handleFilterService}
           />
 
@@ -268,7 +284,7 @@ export default function QuestionListPage() {
                   onSelectAllRows={(checked) =>
                     onSelectAllRows(
                       checked,
-                      tableData.map((row) => row.id)
+                      tableData.map((row) => row._id)
                     )
                   }
                 />
@@ -278,12 +294,12 @@ export default function QuestionListPage() {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
                       <QuestionTableRow
-                        key={row.id}
+                        key={row._id}
                         row={row}
-                        selected={selected.includes(row.id)}
-                        onSelectRow={() => onSelectRow(row.id)}
-                        onEditRow={() => handleEditRow(row.id)}
-                        onDeleteRow={() => handleDeleteRow(row.id)}
+                        selected={selected.includes(row._id)}
+                        onSelectRow={() => onSelectRow(row._id)}
+                        onEditRow={() => handleEditRow(row._id)}
+                        onDeleteRow={() => handleDeleteRow(row._id)}
                       />
                     ))}
 

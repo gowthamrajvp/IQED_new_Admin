@@ -29,12 +29,16 @@ import {
 } from '../../sections/@dashboard/general/app';
 // assets
 import { SeoIllustration } from '../../assets/illustrations';
+import { useGetAllQuestionQuery, useGetAllUsersQuery } from '../../redux/api/User.Api';
+import { useGetAllFeedbackQuery } from '../../redux/api/Feedback.Api';
 
 // ----------------------------------------------------------------------
 
 export default function GeneralAppPage() {
   const { user } = useAuthContext();
-
+  const { data, isSuccess } = useGetAllQuestionQuery();
+  const { data: Feedbackdata } = useGetAllFeedbackQuery();
+  const { data: usersdata } = useGetAllUsersQuery();
   const theme = useTheme();
 
   const { themeStretch } = useSettingsContext();
@@ -90,7 +94,7 @@ export default function GeneralAppPage() {
           <Grid item xs={12} md={4}>
             <AppWidget
               title="IQ Sessions"
-              total={400}
+              total={414}
               icon="line-md:check-list-3-filled"
               chart={{
                 series: 20,
@@ -102,7 +106,7 @@ export default function GeneralAppPage() {
             <AppWidgetSummary
               title="Total Users"
               percent={2}
-              total={7}
+              total={usersdata?.users.length}
               chart={{
                 colors: [theme.palette.primary.main],
                 series: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
@@ -114,7 +118,7 @@ export default function GeneralAppPage() {
             <AppWidgetSummary
               title="Total Questions"
               percent={2}
-              total={1576}
+              total={data?.data.length}
               chart={{
                 colors: [theme.palette.info.main],
                 series: [20, 41, 63, 33, 28, 35, 50, 46, 11, 26],
@@ -126,7 +130,7 @@ export default function GeneralAppPage() {
             <AppWidgetSummary
               title="Total Bugs"
               percent={-0.1}
-              total={6}
+              total={Feedbackdata?.length || 0}
               chart={{
                 colors: [theme.palette.warning.main],
                 series: [8, 9, 31, 8, 16, 37, 8, 33, 46, 31],
@@ -204,7 +208,6 @@ export default function GeneralAppPage() {
           <Grid item xs={12} md={6} lg={4}>
             <AppTopInstalledCountries title="Top Installed Countries" list={_appInstalled} />
           </Grid> */}
-
         </Grid>
       </Container>
     </>
