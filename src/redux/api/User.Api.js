@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const UserApi = createApi({
   reducerPath: "UserApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/admin",
+    baseUrl: "https://iqed-backend.vercel.app/admin",
     // baseUrl: "http://localhost:4000/admin",
     // baseUrl: "https://iqed-backend.vercel.app/user",
     credentials: "include",

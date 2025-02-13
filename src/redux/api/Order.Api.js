@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const ordersApi = createApi({
   reducerPath: 'ordersApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/admin' }), // Replace with your API base URL
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: 'https://iqed-backend.vercel.app/admin' 
+    }), 
   endpoints: (builder) => ({
     createOrder: builder.mutation({
       query: (order) => ({

@@ -115,7 +115,7 @@ export function getBoard() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('http://localhost:3000/admin/GetCareerPathAdmin');
+      const response = await axios.get('https://iqed-backend.vercel.app/admin/GetCareerPathAdmin');
       console.log(response)
       dispatch(slice.actions.getBoardSuccess(response.data));
     } catch (error) {
