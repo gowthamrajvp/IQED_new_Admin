@@ -4,5 +4,6 @@ export { default as SkeletonPostDetails } from './SkeletonPostDetails';
 export { default as SkeletonProductItem } from './SkeletonProductItem';
 export { default as SkeletonMailNavItem } from './SkeletonMailNavItem';
 export { default as SkeletonKanbanColumn } from './SkeletonKanbanColumn';
+export { default as SkeletonSyllabusColumn } from './SkeletonSyllabusColumn';
 export { default as SkeletonProductDetails } from './SkeletonProductDetails';
 export { default as SkeletonConversationItem } from './SkeletonConversationItem';

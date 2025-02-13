@@ -81,6 +81,11 @@ const navConfig = [
         icon: ICONS.analytics,
       },
       {
+        title: 'syllabus',
+        path:PATH_DASHBOARD.syllabus,
+        icon: ICONS.analytics,
+      },
+      {
         title: 'invoice',
         path:PATH_DASHBOARD.invoice.root,
         icon: ICONS.invoice,

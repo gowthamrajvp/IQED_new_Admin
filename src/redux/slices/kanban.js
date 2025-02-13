@@ -40,7 +40,7 @@ const slice = createSlice({
       const { columnOrder } = board;
 
       state.board = {
-        cards,
+        cards:board.cards,
         columns,
         columnOrder,
       };
@@ -115,8 +115,9 @@ export function getBoard() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/kanban/board');
-      dispatch(slice.actions.getBoardSuccess(response.data.board));
+      const response = await axios.get('http://localhost:3000/admin/GetCareerPathAdmin');
+      console.log(response)
+      dispatch(slice.actions.getBoardSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

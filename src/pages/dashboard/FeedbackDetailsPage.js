@@ -11,15 +11,17 @@ import { useSettingsContext } from '../../components/settings';
 import CustomBreadcrumbs from '../../components/custom-breadcrumbs';
 // sections
 import FeedbackDetails from '../../sections/@dashboard/invoice/details/index1';
+import { useGetAllFeedbackQuery } from '../../redux/api/Feedback.Api';
 
 // ----------------------------------------------------------------------
 
 export default function FeedbackDetailsPage() {
   const { themeStretch } = useSettingsContext();
+   const { data: Feedbackdata, isSuccess } = useGetAllFeedbackQuery();
 
   const { id } = useParams();
 
-  const currentInvoice = _invoices.find((invoice) => invoice.id === id);
+  const currentFeedback = Feedbackdata?.find((Feed) => Feed?._id === id);
 
   return (
     <>
@@ -29,18 +31,18 @@ export default function FeedbackDetailsPage() {
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading="Invoice Details"
+          heading="Feedback Details"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
             {
-              name: 'Invoices',
-              href: PATH_DASHBOARD.invoice.root,
+              name: 'Feedback',
+              href: PATH_DASHBOARD.feedback.root,
             },
-            { name: `INV-${currentInvoice?.invoiceNumber}` },
+            { name: `${currentFeedback?._id}` },
           ]}
         />
 
-        <FeedbackDetails invoice={currentInvoice} />
+        <FeedbackDetails feedbackdata={currentFeedback} />
       </Container>
     </>
   );

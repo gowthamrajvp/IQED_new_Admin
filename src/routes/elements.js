@@ -94,6 +94,7 @@ export const ChatPage = Loadable(lazy(() => import('../pages/dashboard/ChatPage'
 export const MailPage = Loadable(lazy(() => import('../pages/dashboard/MailPage')));
 export const CalendarPage = Loadable(lazy(() => import('../pages/dashboard/CalendarPage')));
 export const KanbanPage = Loadable(lazy(() => import('../pages/dashboard/KanbanPage')));
+export const SyllabusPage = Loadable(lazy(() => import('../pages/dashboard/SyllabusPage')));
 
 // TEST RENDER PAGE BY ROLE
 export const PermissionDeniedPage = Loadable(
