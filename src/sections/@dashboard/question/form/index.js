@@ -15,18 +15,18 @@ import { _invoiceAddressFrom } from '../../../../_mock/arrays';
 // components
 import FormProvider from '../../../../components/hook-form';
 //
-import InvoiceNewEditDetails from './InvoiceNewEditDetails';
-import InvoiceNewEditAddress from './InvoiceNewEditAddress';
-import InvoiceNewEditStatusDate from './InvoiceNewEditStatusDate';
+import QuestionNewEditDetails from './QuestionNewEditDetails';
+import QuestionNewEditAddress from './QuestionNewEditAddress';
+import QuestionNewAddSelectTopics from './QuestionNewAddSelectTopics';
 
 // ----------------------------------------------------------------------
 
-InvoiceNewEditForm.propTypes = {
+QuestionNewEditForm.propTypes = {
   isEdit: PropTypes.bool,
   currentInvoice: PropTypes.object,
 };
 
-export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
+export default function QuestionNewEditForm({ isEdit, currentInvoice }) {
   const navigate = useNavigate();
 
   const [loadingSave, setLoadingSave] = useState(false);
@@ -111,23 +111,15 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
   return (
     <FormProvider methods={methods}>
       <Card>
-        <InvoiceNewEditAddress />
+        {/* <QuestionNewEditAddress /> */}
+        
+        <QuestionNewAddSelectTopics />
 
-        <InvoiceNewEditStatusDate />
-
-        <InvoiceNewEditDetails />
+        <QuestionNewEditDetails />
       </Card>
 
       <Stack justifyContent="flex-end" direction="row" spacing={2} sx={{ mt: 3 }}>
-        <LoadingButton
-          color="inherit"
-          size="large"
-          variant="contained"
-          loading={loadingSave && isSubmitting}
-          onClick={handleSubmit(handleSaveAsDraft)}
-        >
-          Save as Draft
-        </LoadingButton>
+        
 
         <LoadingButton
           size="large"
@@ -135,7 +127,7 @@ export default function InvoiceNewEditForm({ isEdit, currentInvoice }) {
           loading={loadingSend && isSubmitting}
           onClick={handleSubmit(handleCreateAndSend)}
         >
-          {isEdit ? 'Update' : 'Create'} & Send
+          {isEdit ? 'Update' : 'Create'} & Submit
         </LoadingButton>
       </Stack>
     </FormProvider>

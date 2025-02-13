@@ -8,6 +8,7 @@ import { useSettingsContext } from '../../components/settings';
 import CustomBreadcrumbs from '../../components/custom-breadcrumbs';
 // sections
 import InvoiceNewEditForm from '../../sections/@dashboard/invoice/form';
+import QuestionNewEditForm from '../../sections/@dashboard/question/form';
 
 // ----------------------------------------------------------------------
 
@@ -17,28 +18,30 @@ export default function QuestionCreatePage() {
   return (
     <>
       <Helmet>
-        <title> Invoices: Create a new invoice | Minimal UI</title>
+        <title> Question Creater | IQED</title>
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading="Create a new invoice"
+          heading="Upload New Questions"
           links={[
             {
               name: 'Dashboard',
               href: PATH_DASHBOARD.root,
             },
             {
-              name: 'Invoices',
-              href: PATH_DASHBOARD.invoice.list,
+              name: 'Questions',
+              href: PATH_DASHBOARD.question.list,
             },
             {
-              name: 'New invoice',
+              name: 'New Questions',
             },
           ]}
         />
 
-        <InvoiceNewEditForm />
+
+
+        <QuestionNewEditForm />
       </Container>
     </>
   );

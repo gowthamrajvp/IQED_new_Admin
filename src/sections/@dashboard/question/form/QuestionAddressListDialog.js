@@ -17,7 +17,7 @@ import SearchNotFound from '../../../../components/search-not-found';
 
 // ----------------------------------------------------------------------
 
-InvoiceAddressListDialog.propTypes = {
+QuestionAddressListDialog.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
   onSelect: PropTypes.func,
@@ -25,7 +25,7 @@ InvoiceAddressListDialog.propTypes = {
   addressOptions: PropTypes.array,
 };
 
-export default function InvoiceAddressListDialog({
+export default function QuestionAddressListDialog({
   open,
   selected,
   onClose,

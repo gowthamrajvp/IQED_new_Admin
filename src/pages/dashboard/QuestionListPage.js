@@ -212,16 +212,16 @@ export default function QuestionListPage() {
               name: 'List',
             },
           ]}
-          // action={
-          //   <Button
-          //     component={RouterLink}
-          //     to={PATH_DASHBOARD.question.new}
-          //     variant="contained"
-          //     startIcon={<Iconify icon="eva:plus-fill" />}
-          //   >
-          //     Add Questions
-          //   </Button>
-          // }
+          action={
+            <Button
+              component={RouterLink}
+              to={PATH_DASHBOARD.question.new}
+              variant="contained"
+              startIcon={<Iconify icon="eva:plus-fill" />}
+            >
+              Add Questions
+            </Button>
+          }
         />
 
         <Card>

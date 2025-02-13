@@ -11,11 +11,11 @@ import { _invoiceAddressFrom, _invoiceAddressTo } from '../../../../_mock/arrays
 // components
 import Iconify from '../../../../components/iconify';
 //
-import InvoiceAddressListDialog from './InvoiceAddressListDialog';
+import InvoiceAddressListDialog from './QuestionAddressListDialog';
 
 // ----------------------------------------------------------------------
 
-export default function InvoiceNewEditAddress() {
+export default function QuestionNewEditAddress() {
   const {
     watch,
     setValue,
