@@ -7,32 +7,32 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 import { useSettingsContext } from '../../components/settings';
 import CustomBreadcrumbs from '../../components/custom-breadcrumbs';
 // sections
-import ProductNewEditForm from '../../sections/@dashboard/e-commerce/ProductNewEditForm';
+import {ChallengeNewEditForm} from '../../sections/@dashboard/e-commerce/challenges';
 
 // ----------------------------------------------------------------------
 
-export default function EcommerceProductCreatePage() {
+export default function ChallengeCreatePage() {
   const { themeStretch } = useSettingsContext();
 
   return (
     <>
       <Helmet>
-        <title> Ecommerce: Create a new product | Minimal UI</title>
+        <title> New challenge | IQED</title>
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading="Create a new product"
+          heading="Create a new challenge"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
             {
-              name: 'E-Commerce',
-              href: PATH_DASHBOARD.eCommerce.root,
+              name: 'Challenges',
+              href: PATH_DASHBOARD.challenge.root,
             },
-            { name: 'New product' },
+            { name: 'New Challenge' },
           ]}
         />
-        <ProductNewEditForm />
+        <ChallengeNewEditForm />
       </Container>
     </>
   );

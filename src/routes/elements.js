@@ -36,28 +36,26 @@ export const GeneralBookingPage = Loadable(
 );
 export const GeneralFilePage = Loadable(lazy(() => import('../pages/dashboard/GeneralFilePage')));
 
-// DASHBOARD: ECOMMERCE
-export const EcommerceShopPage = Loadable(
-  lazy(() => import('../pages/dashboard/EcommerceShopPage'))
-);
+
+
+// DASHBOARD: Challenges
 export const ChallengesPage = Loadable(
   lazy(() => import('../pages/dashboard/ChallengesPage'))
 );
-export const EcommerceProductDetailsPage = Loadable(
-  lazy(() => import('../pages/dashboard/EcommerceProductDetailsPage'))
+
+
+export const ChallengeListPage = Loadable(
+  lazy(() => import('../pages/dashboard/ChallengeListPage'))
 );
-export const EcommerceProductListPage = Loadable(
-  lazy(() => import('../pages/dashboard/EcommerceProductListPage'))
+export const ChallengeCreatePage = Loadable(
+  lazy(() => import('../pages/dashboard/ChallengeCreatePage'))
 );
-export const EcommerceProductCreatePage = Loadable(
-  lazy(() => import('../pages/dashboard/EcommerceProductCreatePage'))
+export const ChallengeEditPage = Loadable(
+  lazy(() => import('../pages/dashboard/ChallengeEditPage'))
 );
-export const EcommerceProductEditPage = Loadable(
-  lazy(() => import('../pages/dashboard/EcommerceProductEditPage'))
-);
-export const EcommerceCheckoutPage = Loadable(
-  lazy(() => import('../pages/dashboard/EcommerceCheckoutPage'))
-);
+
+
+
 
 // DASHBOARD: INVOICE
 export const InvoiceListPage = Loadable(lazy(() => import('../pages/dashboard/InvoiceListPage')));

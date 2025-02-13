@@ -56,7 +56,7 @@ const STATUS_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function EcommerceProductListPage() {
+export default function ChallengeListPage() {
   const {
     dense,
     page,

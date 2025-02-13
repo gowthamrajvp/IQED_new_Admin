@@ -9,9 +9,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Box, Card, Grid, Stack, Typography, InputAdornment } from '@mui/material';
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from '../../../../routes/paths';
 // components
-import { useSnackbar } from '../../../components/snackbar';
+import { useSnackbar } from '../../../../components/snackbar';
 import FormProvider, {
   RHFSwitch,
   RHFSelect,
@@ -20,7 +20,7 @@ import FormProvider, {
   RHFTextField,
   RHFRadioGroup,
   RHFAutocomplete,
-} from '../../../components/hook-form';
+} from '../../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
@@ -34,6 +34,7 @@ const CATEGORY_OPTION = [
   { group: 'Clothing', classify: ['Shirts', 'T-shirts', 'Jeans', 'Leather'] },
   { group: 'Tailored', classify: ['Suits', 'Blazers', 'Trousers', 'Waistcoats'] },
   { group: 'Accessories', classify: ['Shoes', 'Backpacks and bags', 'Bracelets', 'Face masks'] },
+  { group: 'Acce', classify: ['Shoes', 'Backpacks and bags', 'Bracelets', 'Face masks'] },
 ];
 
 const TAGS_OPTION = [
@@ -54,38 +55,44 @@ const TAGS_OPTION = [
 
 // ----------------------------------------------------------------------
 
-ProductNewEditForm.propTypes = {
+ChallengeNewEditForm.propTypes = {
   isEdit: PropTypes.bool,
   currentProduct: PropTypes.object,
 };
 
-export default function ProductNewEditForm({ isEdit, currentProduct }) {
+export default function ChallengeNewEditForm({ isEdit, currentProduct }) {
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewProductSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    images: Yup.array().min(1, 'Images is required'),
-    tags: Yup.array().min(2, 'Must have at least 2 tags'),
-    price: Yup.number().moreThan(0, 'Price should not be $0.00'),
+    images: Yup.array().min(1, 'At least one image is required'),
+    sponsoreName: Yup.string().required('Sponsor Name is required'),
     description: Yup.string().required('Description is required'),
+    topic: Yup.string().required('Topic is required'),
+    questionCount: Yup.number().required('Questions count is required'),
+    participantsCount: Yup.number().required('Participants Count is required'),
+    time: Yup.number()
+      .required('Test time is required'),
+    eligibleGem: Yup.number()
+      .moreThan(0, 'Eligible Gem must be greater than 0')
+      .required('Eligible Gem is required'),
   });
+  
 
   const defaultValues = useMemo(
     () => ({
       name: currentProduct?.productName || '',
       description: currentProduct?.description || '',
-      images: currentProduct?.images || [],
-      code: currentProduct?.code || '',
-      sku: currentProduct?.sku || '',
-      price: currentProduct?.price || 0,
-      priceSale: currentProduct?.priceSale || 0,
-      tags: currentProduct?.tags || [TAGS_OPTION[0]],
-      inStock: true,
-      taxes: true,
-      gender: currentProduct?.gender || GENDER_OPTION[2].value,
-      category: currentProduct?.category || CATEGORY_OPTION[0].classify[1],
+      images: currentProduct?.Image || [],
+      sponsoreName: currentProduct?.sponsoreName || '',
+      title: currentProduct?.title || '',
+      eligibleGem: currentProduct?.eligibleGem || 0,
+      time: currentProduct?.TestTime || 0,
+      questionCount: currentProduct?.QuestionCount || 0,
+      participantsCount: currentProduct?.participantsCount || 0,
+      active: currentProduct?.Active || true,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentProduct]
@@ -159,18 +166,16 @@ export default function ProductNewEditForm({ isEdit, currentProduct }) {
           <Card sx={{ p: 3 }}>
             <Stack spacing={3}>
               <RHFTextField name="name" label="Product Name" />
-
               <Stack spacing={1}>
                 <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
                   Description
                 </Typography>
-
-                <RHFEditor simple name="description" />
+                <RHFTextField name="description"  multiline rows={4} />
               </Stack>
 
               <Stack spacing={1}>
                 <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                  Images
+                  Banner
                 </Typography>
 
                 <RHFUpload
@@ -191,22 +196,22 @@ export default function ProductNewEditForm({ isEdit, currentProduct }) {
         <Grid item xs={12} md={4}>
           <Stack spacing={3}>
             <Card sx={{ p: 3 }}>
-              <RHFSwitch name="inStock" label="In stock" />
+              <RHFSwitch name="active" label="In Live" />
 
               <Stack spacing={3} mt={2}>
-                <RHFTextField name="code" label="Product Code" />
+                <RHFTextField name="sponsoreName" label="Sponsored By" />
 
-                <RHFTextField name="sku" label="Product SKU" />
+                {/* <RHFTextField name="sku" label="Product SKU" /> */}
 
-                <Stack spacing={1}>
+                {/* <Stack spacing={1}>
                   <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
                     Gender
                   </Typography>
 
                   <RHFRadioGroup row spacing={4} name="gender" options={GENDER_OPTION} />
-                </Stack>
+                </Stack> */}
 
-                <RHFSelect native name="category" label="Category">
+                <RHFSelect native name="topic" label="Topic">
                   <option value="" />
                   {CATEGORY_OPTION.map((category) => (
                     <optgroup key={category.group} label={category.group}>
@@ -219,40 +224,69 @@ export default function ProductNewEditForm({ isEdit, currentProduct }) {
                   ))}
                 </RHFSelect>
 
-                <RHFAutocomplete
+                {/* <RHFAutocomplete
                   name="tags"
                   label="Tags"
                   multiple
                   freeSolo
                   options={TAGS_OPTION.map((option) => option)}
                   ChipProps={{ size: 'small' }}
-                />
+                /> */}
               </Stack>
             </Card>
 
             <Card sx={{ p: 3 }}>
               <Stack spacing={3} mb={2}>
                 <RHFTextField
-                  name="price"
-                  label="Regular Price"
-                  placeholder="0.00"
+                  name="questionCount"
+                  label="Questions Count"
                   onChange={(event) =>
-                    setValue('price', Number(event.target.value), { shouldValidate: true })
+                    setValue('QCount', Number(event.target.value), { shouldValidate: true })
                   }
-                  InputLabelProps={{ shrink: true }}
                   InputProps={{
-                    startAdornment: (
+                    type: 'number',
+                  }}
+                />
+                <RHFTextField
+                  name="time"
+                  label="Test Time"
+                  onChange={(event) =>
+                    setValue('time', Number(event.target.value), { shouldValidate: true })
+                  }
+                  InputProps={{
+                    endAdornment: (
                       <InputAdornment position="start">
                         <Box component="span" sx={{ color: 'text.disabled' }}>
-                          $
+                          Min
                         </Box>
                       </InputAdornment>
                     ),
                     type: 'number',
                   }}
                 />
-
                 <RHFTextField
+                  name="eligibleGem"
+                  label="Eligible Gem"
+                  onChange={(event) =>
+                    setValue('gemCount', Number(event.target.value), { shouldValidate: true })
+                  }
+                  InputProps={{
+                    type: 'number',
+                  }}
+                />
+                <RHFTextField
+                  name="participantsCount"
+                  label="Participants Count"
+                  onChange={(event) =>
+                    setValue('participantsCount', Number(event.target.value), { shouldValidate: true })
+                  }
+                  InputProps={{
+                    type: 'number',
+                  }}
+                />
+                
+
+                {/* <RHFTextField
                   name="priceSale"
                   label="Sale Price"
                   placeholder="0.00"
@@ -268,10 +302,10 @@ export default function ProductNewEditForm({ isEdit, currentProduct }) {
                     ),
                     type: 'number',
                   }}
-                />
+                /> */}
               </Stack>
 
-              <RHFSwitch name="taxes" label="Price includes taxes" />
+             
             </Card>
 
             <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>

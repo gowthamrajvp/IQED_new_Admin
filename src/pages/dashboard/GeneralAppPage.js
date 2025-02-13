@@ -42,7 +42,7 @@ export default function GeneralAppPage() {
   return (
     <>
       <Helmet>
-        <title> General: App | Minimal UI</title>
+        <title> General: App | IQED</title>
       </Helmet>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>
@@ -70,30 +70,30 @@ export default function GeneralAppPage() {
           <Grid item xs={12} md={4}>
             <AppWidget
               title="Active Users"
-              total={20000}
+              total={5}
               icon="line-md:account"
               chart={{
-                series: 2,
+                series: 70,
               }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
             <AppWidget
               title="Test Sessions"
-              total={2000}
+              total={765}
               icon="line-md:check-list-3-filled"
               chart={{
-                series: 5,
+                series: 60,
               }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
             <AppWidget
               title="IQ Sessions"
-              total={100}
+              total={400}
               icon="line-md:check-list-3-filled"
               chart={{
-                series: 5,
+                series: 20,
               }}
             />
           </Grid>
@@ -101,8 +101,8 @@ export default function GeneralAppPage() {
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
               title="Total Users"
-              percent={2.6}
-              total={18765}
+              percent={2}
+              total={7}
               chart={{
                 colors: [theme.palette.primary.main],
                 series: [5, 18, 12, 51, 68, 11, 39, 37, 27, 20],
@@ -113,8 +113,8 @@ export default function GeneralAppPage() {
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
               title="Total Questions"
-              percent={-2}
-              total={4876}
+              percent={2}
+              total={1576}
               chart={{
                 colors: [theme.palette.info.main],
                 series: [20, 41, 63, 33, 28, 35, 50, 46, 11, 26],
@@ -126,7 +126,7 @@ export default function GeneralAppPage() {
             <AppWidgetSummary
               title="Total Bugs"
               percent={-0.1}
-              total={678}
+              total={6}
               chart={{
                 colors: [theme.palette.warning.main],
                 series: [8, 9, 31, 8, 16, 37, 8, 33, 46, 31],
@@ -145,17 +145,17 @@ export default function GeneralAppPage() {
                   theme.palette.error.main,
                 ],
                 series: [
-                  { label: 'Pending', value: 12244 },
-                  { label: 'OnProcess', value: 53345 },
-                  { label: 'Delivered', value: 44313 },
-                  { label: 'Cancel', value: 78343 },
+                  { label: 'Pending', value: 12 },
+                  { label: 'OnProcess', value: 53 },
+                  { label: 'Delivered', value: 4 },
+                  { label: 'Cancel', value: 78 },
                 ],
               }}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={6}>
+          {/* <Grid item xs={12} md={6} lg={6}>
             <AppTopAuthors title="Top Authors" list={_appAuthors} />
-          </Grid>
+          </Grid> */}
 
           {/* <Grid item xs={12} md={6} lg={8}>
             <AppAreaInstalled
