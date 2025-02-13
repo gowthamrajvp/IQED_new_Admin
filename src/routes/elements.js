@@ -57,6 +57,13 @@ export const ChallengeEditPage = Loadable(
 
 
 
+// DASHBOARD: Question
+export const QuestionListPage = Loadable(lazy(() => import('../pages/dashboard/QuestionListPage')));
+export const QuestionCreatePage = Loadable(lazy(() => import('../pages/dashboard/QuestionCreatePage')));
+export const QuestionEditPage = Loadable(lazy(() => import('../pages/dashboard/QuestionEditPage')));
+
+
+
 // DASHBOARD: INVOICE
 export const InvoiceListPage = Loadable(lazy(() => import('../pages/dashboard/InvoiceListPage')));
 export const FeedbackListPage = Loadable(lazy(() => import('../pages/dashboard/FeedbackListPage')));

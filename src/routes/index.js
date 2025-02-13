@@ -47,11 +47,21 @@ import {
   // EcommerceProductCreatePage,
   // EcommerceProductDetailsPage,
   // Dashboard: Invoice
+
   InvoiceListPage,
   InvoiceDetailsPage,
   InvoiceCreatePage,
   InvoiceEditPage,
+
+
+  QuestionListPage,
+  QuestionCreatePage,
+  QuestionEditPage,
+
+
   FeedbackListPage,
+
+
   // Dashboard: Blog
   BlogPostsPage,
   BlogPostPage,
@@ -232,6 +242,16 @@ export default function Router() {
             { element: <Navigate to="/dashboard/feedback/list" replace />, index: true },
             { path: 'list', element: <FeedbackListPage /> },
             { path: ':id', element: <FeedbackDetailsPage /> },
+          ],
+        },
+        {
+          path: 'question',
+          children: [
+            { element: <Navigate to="/dashboard/question/list" replace />, index: true },
+            { path: 'list', element: <QuestionListPage /> },
+            // { path: ':id', element: <InvoiceDetailsPage /> },
+            { path: ':id/edit', element: <QuestionEditPage /> },
+            { path: 'new', element: <QuestionCreatePage /> },
           ],
         },
         {

@@ -96,6 +96,13 @@ export const PATH_DASHBOARD = {
     demoEdit: path(ROOTS_DASHBOARD, '/invoice/e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1/edit'),
     demoView: path(ROOTS_DASHBOARD, '/invoice/e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5'),
   },
+
+  question: {
+    root: path(ROOTS_DASHBOARD, '/question'),
+    list: path(ROOTS_DASHBOARD, '/question/list'),
+    new: path(ROOTS_DASHBOARD, '/question/new'),
+    edit: (id) => path(ROOTS_DASHBOARD, `/question/${id}/edit`),
+  },
   feedback: {
     root: path(ROOTS_DASHBOARD, '/feedback'),
     list: path(ROOTS_DASHBOARD, '/feedback/list'),
