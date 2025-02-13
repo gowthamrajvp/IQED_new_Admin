@@ -147,6 +147,7 @@ import {
   DemoUploadPage,
   DemoMarkdownPage,
   FeedbackDetailsPage,
+  SyllabusPage,
 } from './elements';
 
 // ----------------------------------------------------------------------
@@ -184,7 +185,7 @@ export default function Router() {
         },
       ],
     },
-
+    
     // Dashboard
     {
       path: 'dashboard',
@@ -244,6 +245,7 @@ export default function Router() {
             { path: ':id', element: <FeedbackDetailsPage /> },
           ],
         },
+        { path: 'syllabus', element: <SyllabusPage /> },
         {
           path: 'question',
           children: [

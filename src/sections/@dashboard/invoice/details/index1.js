@@ -22,7 +22,8 @@ import Label from '../../../../components/label';
 import Image from '../../../../components/image';
 import Scrollbar from '../../../../components/scrollbar';
 //
-import InvoiceToolbar from './InvoiceToolbar';
+import FeedbackToolbar from './FeedbackToolbar';
+import FeedbackDetailsCarousel from './FeedbackDetailsCarousel';
 
 // ----------------------------------------------------------------------
 
@@ -36,82 +37,81 @@ const StyledRowResult = styled(TableRow)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 FeedbackDetails.propTypes = {
-  invoice: PropTypes.object,
+  feedbackdata: PropTypes.object,
 };
 
-export default function FeedbackDetails({ invoice }) {
-  if (!invoice) {
+export default function FeedbackDetails({ feedbackdata }) {
+  if (!feedbackdata) {
     return null;
   }
 
-  const {
-    items,
-    taxes,
-    status,
-    dueDate,
-    discount,
-    invoiceTo,
-    createDate,
-    totalPrice,
-    invoiceFrom,
-    invoiceNumber,
-    subTotalPrice,
-  } = invoice;
+  const { _id, userId, type, imageList, createAt, feedback, suggestQuestions } = feedbackdata;
 
   return (
     <>
-      <InvoiceToolbar invoice={invoice} />
+      {/* <FeedbackToolbar feedbackraw={feedbackdata} /> */}
 
       <Card sx={{ pt: 5, px: 5 }}>
         <Grid container>
           <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
             <Image disabledEffect alt="logo" src="/logo/logo_full.png" sx={{ maxWidth: 120 }} />
           </Grid>
-
           <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
             <Box sx={{ textAlign: { sm: 'right' } }}>
               <Label
                 variant="soft"
                 color={
-                  (status === 'paid' && 'success') ||
-                  (status === 'unpaid' && 'warning') ||
-                  (status === 'overdue' && 'error') ||
+                  (type === 'general' && 'success') ||
+                  (type === 'suggestQuestions' && 'warning') ||
+                  (type === 'bug' && 'error') ||
                   'default'
                 }
-                sx={{ textTransform: 'uppercase', mb: 1 }}
               >
-                {status}
+                {type}
               </Label>
-
-              <Typography variant="h6">{`INV-${invoiceNumber}`}</Typography>
+              <Typography variant="h6">{`${_id}`}</Typography>
+              <Typography variant="h6">{`${fDate(createAt)}`}</Typography>
             </Box>
           </Grid>
 
           <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
             <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
-              Invoice from
+              User
             </Typography>
 
-            <Typography variant="body2">{invoiceFrom.name}</Typography>
+            {userId && (
+              <>
+                <Typography variant="body2">{userId?.name}</Typography>
 
-            <Typography variant="body2">{invoiceFrom.address}</Typography>
-
-            <Typography variant="body2">Phone: {invoiceFrom.phone}</Typography>
+                <Typography variant="body2">ID: {userId?._id}</Typography>
+              </>
+            )}
           </Grid>
 
-          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
-            <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
-              Invoice to
-            </Typography>
+          <Grid item xs={12} md={6} lg={12}>
+            <Grid xs={6} md={6} lg={12}>
+              <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
+                {type}
+              </Typography>
+              <Typography variant="body2">{feedback}</Typography>
+              {type === 'bug' && (
+                <>
+                  <FeedbackDetailsCarousel Images={imageList} />
+                </>
+              )}
+              <Typography variant="body2">Topic : {suggestQuestions?.topic}</Typography>
+              <Typography variant="body2">Question : {suggestQuestions?.question}</Typography>
+              <Typography variant="body2">Option 1 : {JSON.parse(suggestQuestions?.options)[0].text}</Typography>
+              <Typography variant="body2">Option 2 : {JSON.parse(suggestQuestions?.options)[1].text}</Typography>
+              <Typography variant="body2">Option 3 : {JSON.parse(suggestQuestions?.options)[2].text}</Typography>
+              <Typography variant="body2">Option 4 : {JSON.parse(suggestQuestions?.options)[3].text}</Typography>
+              <Typography variant="body2">Correct Option : {suggestQuestions?.correctOption}</Typography>
+              <Typography variant="body2">Explanation : {suggestQuestions?.explanation}</Typography>
 
-            <Typography variant="body2">{invoiceTo.name}</Typography>
-
-            <Typography variant="body2">{invoiceTo.address}</Typography>
-
-            <Typography variant="body2">Phone: {invoiceTo.phone}</Typography>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
+          {/* <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
             <Typography paragraph variant="overline" sx={{ color: 'text.disabled' }}>
               date create
             </Typography>
@@ -125,9 +125,9 @@ export default function FeedbackDetails({ invoice }) {
             </Typography>
 
             <Typography variant="body2">{fDate(dueDate)}</Typography>
-          </Grid>
+          </Grid> */}
         </Grid>
-
+        {/* 
         <TableContainer sx={{ overflow: 'unset' }}>
           <Scrollbar>
             <Table sx={{ minWidth: 960 }}>
@@ -234,10 +234,10 @@ export default function FeedbackDetails({ invoice }) {
               </TableBody>
             </Table>
           </Scrollbar>
-        </TableContainer>
+        </TableContainer> */}
 
         <Divider sx={{ mt: 5 }} />
-
+        {/* 
         <Grid container>
           <Grid item xs={12} md={9} sx={{ py: 3 }}>
             <Typography variant="subtitle2">NOTES</Typography>
@@ -252,7 +252,7 @@ export default function FeedbackDetails({ invoice }) {
 
             <Typography variant="body2">support@minimals.cc</Typography>
           </Grid>
-        </Grid>
+        </Grid> */}
       </Card>
     </>
   );

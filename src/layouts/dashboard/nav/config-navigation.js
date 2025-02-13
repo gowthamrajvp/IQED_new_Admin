@@ -81,14 +81,21 @@ const navConfig = [
         icon: ICONS.analytics,
       },
       {
-        title: 'Questions',
-        path:PATH_DASHBOARD.question.root,
-        icon: ICONS.invoice,
-        children: [
-          { title: 'list', path: PATH_DASHBOARD.question.list },
-          { title: 'create', path: PATH_DASHBOARD.question.new },
-        ],
+        title: 'syllabus',
+        path:PATH_DASHBOARD.syllabus,
+        icon: ICONS.analytics,
       },
+      // {
+      //   title: 'invoice',
+      //   path:PATH_DASHBOARD.invoice.root,
+      //   icon: ICONS.invoice,
+      //   children: [
+      //     { title: 'list', path: PATH_DASHBOARD.invoice.list },
+      //     { title: 'details', path: PATH_DASHBOARD.invoice.demoView },
+      //     { title: 'create', path: PATH_DASHBOARD.invoice.new },
+      //     { title: 'edit', path: PATH_DASHBOARD.invoice.demoEdit },
+      //   ],
+      // },
       // {
       //   title: 'e-Commerce',
       //   path: PATH_DASHBOARD.eCommerce.root,

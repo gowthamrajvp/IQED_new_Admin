@@ -1,0 +1,69 @@
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
+import { useNavigate } from 'react-router-dom';
+// @mui
+import {
+  Box,
+  Stack,
+  Button,
+  Dialog,
+  Tooltip,
+  IconButton,
+  DialogActions,
+  CircularProgress,
+} from '@mui/material';
+// routes
+import { PATH_DASHBOARD } from '../../../../routes/paths';
+// components
+import Iconify from '../../../../components/iconify';
+//
+import InvoicePDF from './InvoicePDF';
+
+// ----------------------------------------------------------------------
+
+FeedbackToolbar.propTypes = {
+  feedbackraw: PropTypes.object,
+};
+
+export default function FeedbackToolbar({ feedbackraw }) {
+  const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleEdit = () => {
+    navigate(PATH_DASHBOARD.invoice.edit(feedbackraw?._id));
+  };
+
+  return (
+    <>
+      <Dialog fullScreen open={open}>
+        <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+          <DialogActions
+            sx={{
+              zIndex: 9,
+              padding: '12px !important',
+              boxShadow: (theme) => theme.customShadows.z8,
+            }}
+          >
+            <Tooltip title="Close">
+              <IconButton color="inherit" onClick={handleClose}>
+                <Iconify icon="eva:close-fill" />
+              </IconButton>
+            </Tooltip>
+          </DialogActions>
+
+
+        </Box>
+      </Dialog>
+    </>
+  );
+}
