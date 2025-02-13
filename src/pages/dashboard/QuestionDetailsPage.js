@@ -14,7 +14,7 @@ import InvoiceDetails from '../../sections/@dashboard/invoice/details';
 
 // ----------------------------------------------------------------------
 
-export default function InvoiceDetailsPage() {
+export default function QuestionDetailsPage() {
   const { themeStretch } = useSettingsContext();
 
   const { id } = useParams();

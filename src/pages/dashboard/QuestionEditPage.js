@@ -14,7 +14,7 @@ import InvoiceNewEditForm from '../../sections/@dashboard/invoice/form';
 
 // ----------------------------------------------------------------------
 
-export default function InvoiceEditPage() {
+export default function QuestionEditPage() {
   const { themeStretch } = useSettingsContext();
 
   const { id } = useParams();

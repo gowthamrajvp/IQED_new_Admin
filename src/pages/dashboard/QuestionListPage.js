@@ -59,7 +59,7 @@ const TABLE_HEAD = [
 
 // ----------------------------------------------------------------------
 
-export default function InvoiceListPage() {
+export default function QuestionListPage() {
   const theme = useTheme();
 
   const { themeStretch } = useSettingsContext();
@@ -203,7 +203,7 @@ export default function InvoiceListPage() {
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
-              New Invoice
+              Add Questions
             </Button>
           }
         />
