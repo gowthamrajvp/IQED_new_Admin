@@ -4,12 +4,12 @@ import { persistStore, persistReducer } from 'redux-persist';
 import rootReducer, { rootPersistConfig } from './rootReducer';
 import { UserApi } from './api/User.Api';
 import { FeedbackApi } from './api/Feedback.Api';
-
+import { ordersApi } from "./api/Order.Api";
 // ----------------------------------------------------------------------
 
 const store = configureStore({
   reducer: persistReducer(rootPersistConfig, rootReducer),
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(UserApi.middleware,FeedbackApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(UserApi.middleware,FeedbackApi.middleware,ordersApi.middleware),
 });
 
 const persistor = persistStore(store);

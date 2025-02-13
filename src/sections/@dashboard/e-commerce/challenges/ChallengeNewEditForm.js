@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
@@ -21,6 +21,7 @@ import FormProvider, {
   RHFRadioGroup,
   RHFAutocomplete,
 } from '../../../../components/hook-form';
+import { useCreateChallengeMutation, useGetAllTopicQuery } from '../../../../redux/api/User.Api';
 
 // ----------------------------------------------------------------------
 
@@ -62,39 +63,45 @@ ChallengeNewEditForm.propTypes = {
 
 export default function ChallengeNewEditForm({ isEdit, currentProduct }) {
   const navigate = useNavigate();
-
+  const [CreateChallenge] = useCreateChallengeMutation();
+  const { data: TotalTopic } = useGetAllTopicQuery();
   const { enqueueSnackbar } = useSnackbar();
+  const [imageFile, setimageFile] = useState(null);
 
   const NewProductSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    images: Yup.array().min(1, 'At least one image is required'),
+    productName: Yup.string().required('Product Name is required'),
     sponsoreName: Yup.string().required('Sponsor Name is required'),
+    title: Yup.string().required('Title is required'),
     description: Yup.string().required('Description is required'),
-    topic: Yup.string().required('Topic is required'),
-    questionCount: Yup.number().required('Questions count is required'),
-    participantsCount: Yup.number().required('Participants Count is required'),
-    time: Yup.number()
-      .required('Test time is required'),
+    Topic: Yup.string().required('Topic is required'),
+    QuestionCount: Yup.number()
+      .required('Questions count is required')
+      .min(1, 'Questions count must be at least 1'),
+    participantsCount: Yup.number()
+      .required('Participants Count is required')
+      .min(1, 'Participants Count must be at least 1'),
+    TestTime: Yup.number()
+      .required('Test time is required')
+      .min(1, 'Test time must be at least 1 minute'),
     eligibleGem: Yup.number()
-      .moreThan(0, 'Eligible Gem must be greater than 0')
-      .required('Eligible Gem is required'),
+      .required('Eligible Gem is required')
+      .min(1, 'must be at least 1 minute'),
   });
-  
 
   const defaultValues = useMemo(
     () => ({
-      name: currentProduct?.productName || '',
+      productName: currentProduct?.productName || '',
       description: currentProduct?.description || '',
-      images: currentProduct?.Image || [],
+      banner: currentProduct?.banner || [],
       sponsoreName: currentProduct?.sponsoreName || '',
       title: currentProduct?.title || '',
+      Topic: currentProduct?.Topic || '',
       eligibleGem: currentProduct?.eligibleGem || 0,
-      time: currentProduct?.TestTime || 0,
-      questionCount: currentProduct?.QuestionCount || 0,
+      TestTime: currentProduct?.TestTime || 0,
+      QuestionCount: currentProduct?.QuestionCount || 0,
       participantsCount: currentProduct?.participantsCount || 0,
-      active: currentProduct?.Active || true,
+      // Active: currentProduct?.Active || true,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentProduct]
   );
 
@@ -116,6 +123,7 @@ export default function ChallengeNewEditForm({ isEdit, currentProduct }) {
   useEffect(() => {
     if (isEdit && currentProduct) {
       reset(defaultValues);
+      setValue('images', currentProduct?.banner);
     }
     if (!isEdit) {
       reset(defaultValues);
@@ -125,52 +133,75 @@ export default function ChallengeNewEditForm({ isEdit, currentProduct }) {
 
   const onSubmit = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      reset();
-      enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate(PATH_DASHBOARD.eCommerce.list);
-      console.log('DATA', data);
+      console.log('Form Data Before Submission:', data);
+      
+      if (!imageFile) {
+        enqueueSnackbar('Image is required', { variant: 'error' });
+        console.log('Error: No image file selected');
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append('productName', data.productName);
+      formData.append('description', data.description);
+      formData.append('sponsoreName', data.sponsoreName);
+      formData.append('Topic', data.Topic);
+      formData.append('title', data.title);
+      formData.append('eligibleGem', data.eligibleGem);
+      formData.append('TestTime', data.TestTime);
+      formData.append('QuestionCount', data.QuestionCount);
+      formData.append('participantsCount', data.participantsCount);
+      formData.append('file1', imageFile);
+  
+      console.log('FormData before API call:', Object.fromEntries(formData.entries()));
+  
+      await CreateChallenge(formData)
+        .unwrap()
+        .then(async (response) => {
+          console.log('API Response:', response);
+          await new Promise((resolve) => setTimeout(resolve, 500));
+          reset();
+          enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
+          navigate(PATH_DASHBOARD.challenge.root);
+        });
     } catch (error) {
-      console.error(error);
+      console.error('Submission Error:', error);
+      enqueueSnackbar(error.message || 'Something went wrong', { variant: 'error' });
     }
   };
-
+  
   const handleDrop = useCallback(
     (acceptedFiles) => {
-      const files = values.images || [];
+      const file = acceptedFiles[0];
+      setimageFile(file);
+      const newFile = Object.assign(file, {
+        preview: URL.createObjectURL(file),
+      });
+      if (file) {
+        setValue('images', newFile);
 
-      const newFiles = acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      );
-
-      setValue('images', [...files, ...newFiles], { shouldValidate: true });
+      }
     },
-    [setValue, values.images]
+    [setValue]
   );
 
-  const handleRemoveFile = (inputFile) => {
-    const filtered = values.images && values.images?.filter((file) => file !== inputFile);
-    setValue('images', filtered);
+  const handleRemoveFile = () => {
+    setValue('images', null);
   };
-
-  const handleRemoveAllFiles = () => {
-    setValue('images', []);
-  };
-
+  console.log('Form Errors:', methods.formState.errors);
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Card sx={{ p: 3 }}>
             <Stack spacing={3}>
-              <RHFTextField name="name" label="Product Name" />
+              <RHFTextField name="title" label="Challenge Title" />
+              <RHFTextField name="productName" label="Product Name" />
               <Stack spacing={1}>
                 <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
                   Description
                 </Typography>
-                <RHFTextField name="description"  multiline rows={4} />
+                <RHFTextField name="description" multiline rows={4} />
               </Stack>
 
               <Stack spacing={1}>
@@ -179,14 +210,10 @@ export default function ChallengeNewEditForm({ isEdit, currentProduct }) {
                 </Typography>
 
                 <RHFUpload
-                  multiple
-                  thumbnail
                   name="images"
                   maxSize={3145728}
                   onDrop={handleDrop}
-                  onRemove={handleRemoveFile}
-                  onRemoveAll={handleRemoveAllFiles}
-                  onUpload={() => console.log('ON UPLOAD')}
+                  onDelete={handleRemoveFile}
                 />
               </Stack>
             </Stack>
@@ -196,7 +223,7 @@ export default function ChallengeNewEditForm({ isEdit, currentProduct }) {
         <Grid item xs={12} md={4}>
           <Stack spacing={3}>
             <Card sx={{ p: 3 }}>
-              <RHFSwitch name="active" label="In Live" />
+              {/* <RHFSwitch name="active" label="In Live" /> */}
 
               <Stack spacing={3} mt={2}>
                 <RHFTextField name="sponsoreName" label="Sponsored By" />
@@ -211,16 +238,13 @@ export default function ChallengeNewEditForm({ isEdit, currentProduct }) {
                   <RHFRadioGroup row spacing={4} name="gender" options={GENDER_OPTION} />
                 </Stack> */}
 
-                <RHFSelect native name="topic" label="Topic">
+                <RHFSelect native name="Topic" label="Topic">
                   <option value="" />
-                  {CATEGORY_OPTION.map((category) => (
-                    <optgroup key={category.group} label={category.group}>
-                      {category.classify.map((classify) => (
-                        <option key={classify} value={classify}>
-                          {classify}
-                        </option>
-                      ))}
-                    </optgroup>
+
+                  {TotalTopic?.data.map((topic) => (
+                    <option key={topic._id} value={topic._id}>
+                      {topic.name}
+                    </option>
                   ))}
                 </RHFSelect>
 
@@ -238,21 +262,17 @@ export default function ChallengeNewEditForm({ isEdit, currentProduct }) {
             <Card sx={{ p: 3 }}>
               <Stack spacing={3} mb={2}>
                 <RHFTextField
-                  name="questionCount"
+                  name="QuestionCount"
                   label="Questions Count"
-                  onChange={(event) =>
-                    setValue('QCount', Number(event.target.value), { shouldValidate: true })
-                  }
+                  onChange={(event) => setValue('QuestionCount', Number(event.target.value))}
                   InputProps={{
                     type: 'number',
                   }}
                 />
                 <RHFTextField
-                  name="time"
+                  name="TestTime"
                   label="Test Time"
-                  onChange={(event) =>
-                    setValue('time', Number(event.target.value), { shouldValidate: true })
-                  }
+                  onChange={(event) => setValue('TestTime', Number(event.target.value))}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="start">
@@ -267,9 +287,7 @@ export default function ChallengeNewEditForm({ isEdit, currentProduct }) {
                 <RHFTextField
                   name="eligibleGem"
                   label="Eligible Gem"
-                  onChange={(event) =>
-                    setValue('gemCount', Number(event.target.value), { shouldValidate: true })
-                  }
+                  onChange={(event) => setValue('eligibleGem', Number(event.target.value))}
                   InputProps={{
                     type: 'number',
                   }}
@@ -277,14 +295,11 @@ export default function ChallengeNewEditForm({ isEdit, currentProduct }) {
                 <RHFTextField
                   name="participantsCount"
                   label="Participants Count"
-                  onChange={(event) =>
-                    setValue('participantsCount', Number(event.target.value), { shouldValidate: true })
-                  }
+                  onChange={(event) => setValue('participantsCount', Number(event.target.value))}
                   InputProps={{
                     type: 'number',
                   }}
                 />
-                
 
                 {/* <RHFTextField
                   name="priceSale"
@@ -304,8 +319,6 @@ export default function ChallengeNewEditForm({ isEdit, currentProduct }) {
                   }}
                 /> */}
               </Stack>
-
-             
             </Card>
 
             <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>

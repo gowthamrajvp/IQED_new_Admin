@@ -7,7 +7,7 @@ import calendarReducer from './slices/calendar';
 import kanbanReducer from './slices/kanban';
 import { UserApi } from './api/User.Api';
 import { FeedbackApi } from './api/Feedback.Api';
-
+import { ordersApi } from "./api/Order.Api";
 // ----------------------------------------------------------------------
 
 export const rootPersistConfig = {
@@ -24,6 +24,7 @@ const rootReducer = combineReducers({
   kanban: kanbanReducer,
   UserApi: UserApi.reducer,
   FeedbackApi: FeedbackApi.reducer,
+  ordersApi: ordersApi.reducer,
 });
 
 export default rootReducer;

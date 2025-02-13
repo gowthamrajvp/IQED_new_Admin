@@ -20,12 +20,13 @@ import Iconify from '../../components/iconify';
 import CartWidget from '../../sections/@dashboard/e-commerce/CartWidget';
 import dummyProducts from './dummyData1';
 import { ChallengeList, ChallengeSearch, ChallengeSort, ChallengeTagFiltered } from '../../sections/@dashboard/e-commerce/challenges';
+import { useGetAllChallengeQuery } from '../../redux/api/User.Api';
 
 // ----------------------------------------------------------------------
 
 export default function ChallengesPage() {
   const { themeStretch } = useSettingsContext();
-
+  const { data: productsdata, isSuccess, refetch } = useGetAllChallengeQuery();
   const [products, setProducts] = useState([]);
 
   const dispatch = useDispatch();
@@ -68,10 +69,11 @@ export default function ChallengesPage() {
   // useEffect(() => {
   //   dispatch(getProducts());
   // }, [dispatch]);
-
   useEffect(() => {
-    setProducts(dummyProducts); // Simulating data fetch
-  }, []);
+    if (isSuccess && productsdata?.challenges) {
+      setProducts(productsdata.challenges);
+    }
+  }, [isSuccess, productsdata]);
 
 
   const handleResetFilter = () => {
