@@ -23,10 +23,10 @@ import QuestionNewAddSelectTopics from './QuestionNewAddSelectTopics';
 
 QuestionNewEditForm.propTypes = {
   isEdit: PropTypes.bool,
-  currentInvoice: PropTypes.object,
+  currentQuestion: PropTypes.object,
 };
 
-export default function QuestionNewEditForm({ isEdit, currentInvoice }) {
+export default function QuestionNewEditForm({ isEdit, currentQuestion }) {
   const navigate = useNavigate();
 
   const [loadingSave, setLoadingSave] = useState(false);
@@ -34,27 +34,25 @@ export default function QuestionNewEditForm({ isEdit, currentInvoice }) {
   const [loadingSend, setLoadingSend] = useState(false);
 
   const NewUserSchema = Yup.object().shape({
-    createDate: Yup.string().nullable().required('Create date is required'),
-    dueDate: Yup.string().nullable().required('Due date is required'),
-    invoiceTo: Yup.mixed().nullable().required('Invoice to is required'),
+    topic: Yup.string().nullable().required('topic is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      invoiceNumber: currentInvoice?.invoiceNumber || '17099',
-      createDate: currentInvoice?.createDate || new Date(),
-      dueDate: currentInvoice?.dueDate || null,
-      taxes: currentInvoice?.taxes || 0,
-      status: currentInvoice?.status || 'draft',
-      discount: currentInvoice?.discount || 0,
-      invoiceFrom: currentInvoice?.invoiceFrom || _invoiceAddressFrom[0],
-      invoiceTo: currentInvoice?.invoiceTo || null,
-      items: currentInvoice?.items || [
+      invoiceNumber: currentQuestion?.invoiceNumber || '17099',
+      createDate: currentQuestion?.createDate || new Date(),
+      dueDate: currentQuestion?.dueDate || null,
+      taxes: currentQuestion?.taxes || 0,
+      status: currentQuestion?.status || 'draft',
+      discount: currentQuestion?.discount || 0,
+      invoiceFrom: currentQuestion?.invoiceFrom || _invoiceAddressFrom[0],
+      invoiceTo: currentQuestion?.invoiceTo || null,
+      items: currentQuestion?.items || [
         { title: '', description: '', service: '', quantity: 1, price: 0, total: 0 },
       ],
-      totalPrice: currentInvoice?.totalPrice || 0,
+      totalPrice: currentQuestion?.totalPrice || 0,
     }),
-    [currentInvoice]
+    [currentQuestion]
   );
 
   const methods = useForm({
@@ -69,14 +67,14 @@ export default function QuestionNewEditForm({ isEdit, currentInvoice }) {
   } = methods;
 
   useEffect(() => {
-    if (isEdit && currentInvoice) {
+    if (isEdit && currentQuestion) {
       reset(defaultValues);
     }
     if (!isEdit) {
       reset(defaultValues);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEdit, currentInvoice]);
+  }, [isEdit, currentQuestion]);
 
   const handleSaveAsDraft = async (data) => {
     setLoadingSave(true);
@@ -85,7 +83,7 @@ export default function QuestionNewEditForm({ isEdit, currentInvoice }) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       setLoadingSave(false);
-      navigate(PATH_DASHBOARD.invoice.list);
+      navigate(PATH_DASHBOARD.question.list);
       console.log('DATA', JSON.stringify(data, null, 2));
     } catch (error) {
       console.error(error);
@@ -100,7 +98,7 @@ export default function QuestionNewEditForm({ isEdit, currentInvoice }) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       setLoadingSend(false);
-      navigate(PATH_DASHBOARD.invoice.list);
+      navigate(PATH_DASHBOARD.question.list);
       console.log('DATA', JSON.stringify(data, null, 2));
     } catch (error) {
       console.error(error);

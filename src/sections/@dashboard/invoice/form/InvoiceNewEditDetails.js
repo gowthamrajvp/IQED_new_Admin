@@ -31,7 +31,7 @@ export default function InvoiceNewEditDetails() {
   });
 
   const values = watch();
-
+  
   const totalOnRow = values.items.map((item) => item.quantity * item.price);
 
   const totalPrice = sum(totalOnRow) - values.discount + values.taxes;

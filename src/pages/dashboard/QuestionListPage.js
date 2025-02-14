@@ -70,7 +70,7 @@ export default function QuestionListPage() {
   const theme = useTheme();
   const TopicNameList = TotalTopic?.data.map((p)=> p.name)
   const { themeStretch } = useSettingsContext();
-
+  console.log("Qestionsdata",data)
   const navigate = useNavigate();
 
   const {
